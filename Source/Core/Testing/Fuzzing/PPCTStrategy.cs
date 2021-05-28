@@ -31,7 +31,7 @@ namespace Microsoft.Coyote.Testing.Fuzzing
         private readonly List<int> HighPrioritySet = new List<int>();
 
         // Probability with which tasks should be alloted to the low priority Set.
-        private double lowPriortityProbability;
+        private readonly double lowPriortityProbability;
 
         /// <summary>
         /// The number of exploration steps.
@@ -41,12 +41,12 @@ namespace Microsoft.Coyote.Testing.Fuzzing
         /// <summary>
         /// Initializes a new instance of the <see cref="PPCTStrategy"/> class.
         /// </summary>
-        internal PPCTStrategy(int maxDelays, IRandomValueGenerator random, int priorityChangePoints)
+        internal PPCTStrategy(int maxDelays, IRandomValueGenerator random, int priorityChangePoints = 5)
         {
             this.RandomValueGenerator = random;
             this.MaxSteps = maxDelays;
             this.PriorityChangePoints = priorityChangePoints;
-            this.lowPriortityProbability = 0;
+            this.lowPriortityProbability = 0.1;
         }
 
         /// <inheritdoc/>
@@ -55,9 +55,6 @@ namespace Microsoft.Coyote.Testing.Fuzzing
             this.StepCount = 0;
             this.LowPrioritySet.Clear();
             this.HighPrioritySet.Clear();
-
-            // Change the probability of a task to be assigned to the LowPrioritySet after every iteration.
-            this.lowPriortityProbability = (this.lowPriortityProbability >= 0.8) ? 0 : this.lowPriortityProbability + 0.1;
 
             return true;
         }
@@ -102,7 +99,7 @@ namespace Microsoft.Coyote.Testing.Fuzzing
             }
             else
             {
-                next = this.RandomValueGenerator.Next(10) * 5;
+                next = this.RandomValueGenerator.Next(50);
             }
 
             return true;
