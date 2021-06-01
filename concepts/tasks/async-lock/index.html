@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/concepts/tasks/async-lock/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Async lock - Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Controlled asynchronous lock", url: "#_top", children: [
+          ]},
+          {title: "Why is an asynchronous lock necessary?", url: "#why-is-an-asynchronous-lock-necessary", children: [
+          ]},
+          {title: "How do you use it?", url: "#how-do-you-use-it", children: [
+          ]},
+          {title: "Example usage", url: "#example-usage", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+      
+
+      <h2 id="controlled-asynchronous-lock">Controlled asynchronous lock</h2>
+<p>The Coyote asynchronous tasks programming model provides an <code>AsyncLock</code> type that represents a
+non-reentrant mutual exclusion lock that can be acquired asynchronously in a FIFO order. During
+systematic testing, <code>AsyncLock</code> is controlled by <code>coyote test</code> to explore acquire/release
+interleavings and find concurrency bugs.</p>
+<h2 id="why-is-an-asynchronous-lock-necessary">Why is an asynchronous lock necessary?</h2>
+<p>Although it is recommended that asynchronous code should be as lock-free as possible, in some
+scenarios it is still useful to serialize asynchronous access to a shared resource. Using the C#
+<a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/lock-statement"><code>lock</code></a>
+statement might not be an option as C# forbids the use of <code>await</code> inside the <code>lock</code> scope. This is
+because using <code>await</code> inside <code>lock</code> (which is implemented using
+<a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.monitor"><code>System.Threading.Monitor</code></a>
+APIs) can be prone to deadlocks due to its reentrancy semantics.</p>
+<p>The Coyote <code>AsyncLock</code> type does not have this limitation, and a <a href="../overview/">controlled <code>Task</code></a> is
+free to <code>await</code> while holding an instance of this lock type. Awaiting on an <code>AsyncLock</code> also does
+not block the underlying thread allowing for a more efficient execution.</p>
+<p>Note that the C# lock statement is still supported by <code>coyote test</code>. However&mdash;besides not using
+<code>await</code> in the body of <code>lock</code>&mdash;you should also make sure to not call any Coyote API that can
+introduce a scheduling decision during systematic testing (such as <code>Task.Run</code>, <code>Task.Delay</code> or
+<code>Task.Yield</code>), while holding a <code>lock</code>, as this can lead to deadlocks.</p>
+<h2 id="how-do-you-use-it">How do you use it?</h2>
+<ol>
+<li>You create an instance of an <code>AsyncLock</code> by calling the static method <code>AsyncLock.Create()</code>.</li>
+<li>The only instance-level method that <code>AsyncLock</code> provides is <code>AcquireAsync()</code>. This method tries
+   to acquire the lock asynchronously, and returns a task that completes when the lock has been
+   acquired. The returned task&rsquo;s result is of type <code>AsyncLock.Releaser</code>. This <code>Releaser</code> implements
+   the <code>IDisposable</code> interface. It releases the lock when disposed. Note that <code>AcquireAsync()</code> is
+   not a reentrant operation.</li>
+<li><code>AsyncLock</code> exposes the <code>IsAcquired</code> boolean property, which is true if the lock has been
+   acquired, else false.</li>
+<li>Finally, when the <code>AsyncLock</code> is acquired, your code can enter the scope of this lock and perform
+   synchronized operations. As the <code>Releaser</code> implements <code>IDisposable</code>, this makes it possible (and
+   convenient) to put the synchronized code inside a <code>using</code> statement. This ensures the <code>AsyncLock</code>
+   is released when exiting the body of <code>using</code> in a way that is also exception safe.</li>
+</ol>
+<p>During systematic testing, <code>coyote test</code> injects scheduling points upon acquiring or releasing the
+lock, which allows it to explore interleavings and expose bugs (including deadlocks).</p>
+<h2 id="example-usage">Example usage</h2>
+<p>The code below demonstrates <code>AsyncLock</code> in action:</p>
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
+
+public class LockExample
+{
+    private int Value = 0;
+    private bool IsRunning = false;
+    private readonly AsyncLock Mutex = AsyncLock.Create();
+
+    public async Task FirstOperationAsync()
+    {
+        using (await this.Mutex.AcquireAsync())
+        {
+            if (!this.IsRunning)
+            {
+                this.IsRunning = true;
+                this.Value = 5;
+            }
+        }
+    }
+
+    public async Task SecondOperationAsync(bool reenter)
+    {
+        using (await this.Mutex.AcquireAsync())
+        {
+            if (this.IsRunning)
+            {
+                this.IsRunning = false;
+                this.Value = 0;
+            }
+
+            if (reenter)
+            {
+                // This causes a deadlock ... so don't do this!
+                await this.SecondOperationAsync(reenter);
+            }
+        }
+    }
+}
+</code></pre>
+<p>In the above example, the <code>FirstOperationAsync</code> and <code>SecondOperationAsync</code> methods use an
+<code>AsyncLock</code> to avoid a race condition while testing and updating <code>IsRunning</code> and <code>Value</code>.</p>
+<p>You can write a test for this code as follows:</p>
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
+
+public static class Program
+{
+    public static async System.Threading.Tasks.Task Main()
+    {
+        await RunTestAsync();
+    }
+
+    [Microsoft.Coyote.SystematicTesting.Test]
+    public static async Task RunTestAsync()
+    {
+        bool reenter = false;
+
+        LockExample test = new LockExample();
+        for (int i = 0; i &lt; 100; i++)
+        {
+            var task1 = test.FirstOperationAsync();
+            var task2 = test.SecondOperationAsync(reenter);
+            await Task.WhenAll(task1, task2);
+        }
+
+        Console.WriteLine(&quot;Done testing.&quot;);
+    }
+}
+</code></pre>
+<p>When you run this test in the command line (by running the executable on its own, without <code>coyote
+test</code>), then it normally finishes with the following output:</p>
+<pre><code class="language-plain">Done testing.
+</code></pre>
+<p>Next, change <code>bool reenter = false;</code> to <code>true</code>, build and run the test again (without <code>coyote
+test</code>). This time execution is hanging forever and needs to be killed by pressing Ctrl-C. So, what
+happened? As you see from the code above, the <code>SecondOperationAsync</code> can invoke itself while holding
+<code>AsyncLock</code> when <code>reenter</code> is true. This results in a deadlock.</p>
+<p>Now, try to run the test with <code>coyote test</code>. Instead of hanging, <code>coyote test</code> will quickly detect a
+deadlock:</p>
+<pre><code class="language-plain">Error: Deadlock detected. Task(0) is waiting to acquire a resource that is already acquired, but no other controlled tasks are enabled.
+</code></pre>
+
+    <br>
+      
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>

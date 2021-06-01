@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/ref/Microsoft.Coyote.Tasks/Task/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Overview - Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Task class", url: "#_top", children: [
+              {title: "Public Members", url: "#public-members" },
+              {title: "Protected Members", url: "#protected-members" },
+              {title: "Remarks", url: "#remarks" },
+              {title: "See Also", url: "#see-also" },
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="FromResult/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="FromResult/" class="btn btn-xs btn-link">
+        FromResult
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../SynchronizedBlock/SyncObject/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../SynchronizedBlock/SyncObject/" class="btn btn-xs btn-link">
+        SyncObject
+      </a>
+    </div>
+    
+  </div>
+
+      
+
+      <h1 id="task-class">Task class</h1>
+<p>Represents an asynchronous operation. Each <a href="./"><code>Task</code></a> is a thin wrapper over Task and each call simply invokes the wrapped task. During testing, a <a href="./"><code>Task</code></a> is controlled by the runtime and systematically interleaved with other asynchronous operations to find bugs.</p>
+<pre><code class="language-csharp">public class Task : IDisposable
+</code></pre>
+<h2 id="public-members">Public Members</h2>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>static <a href="CompletedTask/">CompletedTask</a> { get; }</td>
+<td>A <a href="./"><code>Task</code></a> that has completed successfully.</td>
+</tr>
+<tr>
+<td>static <a href="Delay/">Delay</a>(…)</td>
+<td>Creates a <a href="./"><code>Task</code></a> that completes after a time delay. (4 methods)</td>
+</tr>
+<tr>
+<td>static <a href="FromCanceled/">FromCanceled</a>(…)</td>
+<td>Creates a <a href="./"><code>Task</code></a> that is completed due to cancellation with a specified cancellation token.</td>
+</tr>
+<tr>
+<td>static <a href="FromException/">FromException</a>(…)</td>
+<td>Creates a <a href="./"><code>Task</code></a> that is completed with a specified exception.</td>
+</tr>
+<tr>
+<td>static <a href="Run/">Run</a>(…)</td>
+<td>Queues the specified work to run on the thread pool and returns a <a href="./"><code>Task</code></a> object that represents that work. A cancellation token allows the work to be cancelled. (4 methods)</td>
+</tr>
+<tr>
+<td>static <a href="WhenAll/">WhenAll</a>(…)</td>
+<td>Creates a <a href="./"><code>Task</code></a> that will complete when all tasks in the specified array have completed. (2 methods)</td>
+</tr>
+<tr>
+<td><a href="Exception/">Exception</a> { get; }</td>
+<td>Gets the AggregateException that caused the task to end prematurely. If the task completed successfully or has not yet thrown any exceptions, this will return null.</td>
+</tr>
+<tr>
+<td><a href="Id/">Id</a> { get; }</td>
+<td>The id of this task.</td>
+</tr>
+<tr>
+<td><a href="IsCanceled/">IsCanceled</a> { get; }</td>
+<td>Value that indicates whether the task completed execution due to being canceled.</td>
+</tr>
+<tr>
+<td><a href="IsCompleted/">IsCompleted</a> { get; }</td>
+<td>Value that indicates whether the task has completed.</td>
+</tr>
+<tr>
+<td><a href="IsFaulted/">IsFaulted</a> { get; }</td>
+<td>Value that indicates whether the task completed due to an unhandled exception.</td>
+</tr>
+<tr>
+<td><a href="Status/">Status</a> { get; }</td>
+<td>The status of this task.</td>
+</tr>
+<tr>
+<td><a href="UncontrolledTask/">UncontrolledTask</a> { get; }</td>
+<td>The uncontrolled Task that is wrapped inside this controlled <a href="./"><code>Task</code></a>.</td>
+</tr>
+<tr>
+<td><a href="ConfigureAwait/">ConfigureAwait</a>(…)</td>
+<td>Configures an awaiter used to await this task.</td>
+</tr>
+<tr>
+<td><a href="Dispose/">Dispose</a>()</td>
+<td>Disposes the <a href="./"><code>Task</code></a>, releasing all of its unmanaged resources.</td>
+</tr>
+<tr>
+<td><a href="GetAwaiter/">GetAwaiter</a>()</td>
+<td>Gets an awaiter for this awaitable.</td>
+</tr>
+<tr>
+<td><a href="Wait/">Wait</a>()</td>
+<td>Waits for the task to complete execution.</td>
+</tr>
+<tr>
+<td><a href="Wait/">Wait</a>(…)</td>
+<td>Waits for the task to complete execution within a specified time interval. (4 methods)</td>
+</tr>
+<tr>
+<td>static <a href="CurrentId/">CurrentId</a> { get; }</td>
+<td>Returns the id of the currently executing <a href="./"><code>Task</code></a>.</td>
+</tr>
+<tr>
+<td>static <a href="ExploreContextSwitch/">ExploreContextSwitch</a>()</td>
+<td>Injects a context switch point that can be systematically explored during testing.</td>
+</tr>
+<tr>
+<td>static <a href="FromCanceled/">FromCanceled&lt;TResult&gt;</a>(…)</td>
+<td>Creates a <a href="../Task-1/"><code>Task</code></a> that is completed due to cancellation with a specified cancellation token.</td>
+</tr>
+<tr>
+<td>static <a href="FromException/">FromException&lt;TResult&gt;</a>(…)</td>
+<td>Creates a <a href="../Task-1/"><code>Task</code></a> that is completed with a specified exception.</td>
+</tr>
+<tr>
+<td>static <a href="FromResult/">FromResult&lt;TResult&gt;</a>(…)</td>
+<td>Creates a <a href="../Task-1/"><code>Task</code></a> that is completed successfully with the specified result.</td>
+</tr>
+<tr>
+<td>static <a href="Run/">Run&lt;TResult&gt;</a>(…)</td>
+<td>Queues the specified work to run on the thread pool and returns a proxy for the <a href="../Task-1/"><code>Task</code></a> returned by the function. (4 methods)</td>
+</tr>
+<tr>
+<td>static <a href="WaitAll/">WaitAll</a>(…)</td>
+<td>Waits for all of the provided <a href="./"><code>Task</code></a> objects to complete execution. (5 methods)</td>
+</tr>
+<tr>
+<td>static <a href="WaitAny/">WaitAny</a>(…)</td>
+<td>Waits for any of the provided <a href="./"><code>Task</code></a> objects to complete execution. (5 methods)</td>
+</tr>
+<tr>
+<td>static <a href="WhenAll/">WhenAll&lt;TResult&gt;</a>(…)</td>
+<td>Creates a <a href="./"><code>Task</code></a> that will complete when all tasks in the specified array have completed. (2 methods)</td>
+</tr>
+<tr>
+<td>static <a href="WhenAny/">WhenAny</a>(…)</td>
+<td>Creates a <a href="./"><code>Task</code></a> that will complete when any task in the specified array have completed. (2 methods)</td>
+</tr>
+<tr>
+<td>static <a href="WhenAny/">WhenAny&lt;TResult&gt;</a>(…)</td>
+<td>Creates a <a href="./"><code>Task</code></a> that will complete when any task in the specified array have completed. (2 methods)</td>
+</tr>
+<tr>
+<td>static <a href="Yield/">Yield</a>()</td>
+<td>Creates an awaitable that asynchronously yields back to the current context when awaited.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protected-members">Protected Members</h2>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>virtual <a href="Dispose/">Dispose</a>(…)</td>
+<td>Disposes the <a href="./"><code>Task</code></a>, releasing all of its unmanaged resources.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="remarks">Remarks</h2>
+<p>See <a href="/coyote/concepts/tasks/overview">Programming model: asynchronous tasks</a> for more information.</p>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li>namespace <a href="../../Microsoft.Coyote.TasksNamespace/">Microsoft.Coyote.Tasks</a></li>
+<li>assembly <a href="../../Microsoft.Coyote/">Microsoft.Coyote</a></li>
+</ul>
+<!-- DO NOT EDIT: generated by xmldocmd for Microsoft.Coyote.dll -->
+
+    <br>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="FromResult/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="FromResult/" class="btn btn-xs btn-link">
+        FromResult
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../SynchronizedBlock/SyncObject/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../SynchronizedBlock/SyncObject/" class="btn btn-xs btn-link">
+        SyncObject
+      </a>
+    </div>
+    
+  </div>
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>

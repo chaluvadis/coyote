@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/get-started/install/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Installing Coyote - Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="../../css/main.css" rel="stylesheet">
+    <link href="../../css/player-controls.css" rel="stylesheet">
+    <link href="../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Installing Coyote", url: "#_top", children: [
+              {title: "Prerequisites", url: "#prerequisites" },
+              {title: "Installing the NuGet package", url: "#installing-the-nuget-package" },
+              {title: "Installing the .NET 5.0 Coyote tool", url: "#installing-the-net-50-coyote-tool" },
+              {title: "Using the Coyote tool", url: "#using-the-coyote-tool" },
+              {title: "Troubleshooting", url: "#troubleshooting" },
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="../../assets/js/analytics.js"></script>
+      <script src="../../assets/js/plugins.js"></script>
+      <script src="../../assets/js/animate_trace.js"></script>
+      <script src="../../assets/js/animation.js"></script>
+      <script src="../../assets/js/progress_bar.js"></script>
+      <script src="../../assets/js/trace_model.js"></script>
+      <script src="../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../using-coyote/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../using-coyote/" class="btn btn-xs btn-link">
+        Using Coyote
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../overview/faq/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../overview/faq/" class="btn btn-xs btn-link">
+        FAQ
+      </a>
+    </div>
+    
+  </div>
+
+      
+
+      <h2 id="installing-coyote">Installing Coyote</h2>
+<p>Coyote is a NuGet library and works on .NET Core which means it can be used on Windows, Linux and
+macOS.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li><a href="https://dotnet.microsoft.com/download/dotnet-core">.NET 5.0 SDK</a></li>
+</ul>
+<p><strong>Optional:</strong></p>
+<ul>
+<li>
+<p><a href="https://docs.microsoft.com/en-us/visualstudio/install/install-visual-studio">Visual Studio 2019</a>
+if you are on Windows.</p>
+</li>
+<li>
+<p><a href="https://code.visualstudio.com/Download">Visual Studio Code</a> is handy to have on other platforms.</p>
+</li>
+<li>
+<p>Add the <a href="../../how-to/generate-dgml/">DGML editor</a> feature of Visual Studio 2019.</p>
+</li>
+</ul>
+<h3 id="installing-the-nuget-package">Installing the NuGet package</h3>
+<div>
+<a href="https://www.nuget.org/packages/Microsoft.Coyote/" class="btn btn-primary mt-20 mr-30" target="_blank">Install Coyote package</a>
+<a href="https://www.nuget.org/packages/Microsoft.Coyote.Test/" class="btn btn-primary mt-20 mr-30" target="_blank">Install Coyote Test package</a>
+<br/>
+<br/>
+</div>
+
+<p>The Coyote libraries can be easily installed by adding the
+<a href="https://www.nuget.org/packages/Microsoft.Coyote/"><code>Microsoft.Coyote</code></a> NuGet package and the
+<a href="https://www.nuget.org/packages/Microsoft.Coyote.Test/"><code>Microsoft.Coyote.Test</code></a> NuGet package to
+your C# project. You can then immediately start programming the Coyote API as shown in the
+<a href="http://github.com/microsoft/coyote-samples">samples</a>.</p>
+<p>You can manually add Coyote to your C# project by using:</p>
+<pre><code class="language-plain">dotnet add &lt;yourproject&gt;.csproj package Microsoft.Coyote
+dotnet add &lt;yourproject&gt;.csproj package Microsoft.Coyote.Test
+</code></pre>
+<h3 id="installing-the-net-50-coyote-tool">Installing the .NET 5.0 Coyote tool</h3>
+<p>You can also install the <code>dotnet tool</code> named <code>coyote</code> for .NET 5.0 using the following command:</p>
+<pre><code class="language-plain">dotnet tool install --global Microsoft.Coyote.CLI
+</code></pre>
+<p>Now you can run the <code>coyote test</code> tool without having to build Coyote from source. Type <code>coyote
+--help</code> to see if it is working. The dotnet tool install can also install coyote to a <code>--local</code>
+folder if you prefer that.</p>
+<p>You can update the global <code>coyote</code> tool by running the following command:</p>
+<pre><code class="language-plain">dotnet tool update --global Microsoft.Coyote.CLI
+</code></pre>
+<p>You can remove the global <code>coyote</code> tool by running the following command:</p>
+<pre><code class="language-plain">dotnet tool uninstall --global Microsoft.Coyote.CLI
+</code></pre>
+<p><strong>Note:</strong> this command line tool is only for .NET Core. If you need a version of <code>coyote.exe</code> that
+runs on .NET Framework, this is installed from the <code>Microsoft.Coyote.Test</code> package, and you can run
+it from the bin folder of your Coyote application.</p>
+<h3 id="using-the-coyote-tool">Using the Coyote tool</h3>
+<p>To learn how to use the Coyote tool read <a href="../using-coyote/">here</a>.</p>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<h4 id="the-element-metadata-in-namespace-nuspecxsd-has-invalid-child-element-repository">The element &lsquo;metadata&rsquo; in namespace nuspec.xsd has invalid child element &lsquo;repository&rsquo;&hellip;</h4>
+<p>If you get an error building the nuget package, you may need to download
+a new version of <code>nuget.exe</code> from <a href="https://www.nuget.org/downloads">https://www.nuget.org/downloads</a>.</p>
+
+    <br>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../using-coyote/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../using-coyote/" class="btn btn-xs btn-link">
+        Using Coyote
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../overview/faq/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../overview/faq/" class="btn btn-xs btn-link">
+        FAQ
+      </a>
+    </div>
+    
+  </div>
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>

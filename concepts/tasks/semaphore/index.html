@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/concepts/tasks/semaphore/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Semaphore - Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Controlled Semaphore", url: "#_top", children: [
+          ]},
+          {title: "Why is a semaphore necessary?", url: "#why-is-a-semaphore-necessary", children: [
+          ]},
+          {title: "How do you use it?", url: "#how-do-you-use-it", children: [
+          ]},
+          {title: "Example usage", url: "#example-usage", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+      
+
+      <h2 id="controlled-semaphore">Controlled Semaphore</h2>
+<p>The Coyote asynchronous tasks programming model provides a <code>Semaphore</code> type that limits the number
+of tasks that can access a resource. During testing, the semaphore is automatically replaced with
+a controlled mocked version so that Coyote can perform any desired scheduling and interleaving
+of asynchronous operations.</p>
+<h2 id="why-is-a-semaphore-necessary">Why is a semaphore necessary?</h2>
+<p>A semaphore is used in scenarios where you have to limit the number of tasks that can use a resource
+simultaneously. There are two semaphore types provided in C#:
+<a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphore"><code>Semaphore</code></a>
+and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.semaphoreslim"><code>SemaphoreSlim</code></a>.</p>
+<p>However, you should not use these .NET semaphore types in a Coyote program because synchronization
+must be done via Coyote APIs.</p>
+<p>Using the controlled <code>Semaphore</code> type of Coyote allows <code>coyote test</code> to fully control the scheduling
+of asynchronous operations.</p>
+<h2 id="how-do-you-use-it">How do you use it?</h2>
+<ol>
+<li>You create an instance of a <code>Semaphore</code> by calling the static method
+<code>Semaphore.Create(initialCount, maxCount)</code>. This method requires you to specify two <code>Int32</code> arguments:</li>
+<li><code>initialCount</code>. The initial number of requests for the semaphore that can be granted concurrently.</li>
+<li><code>maxCount</code>. The maximum number of requests for the semaphore that can be granted concurrently.</li>
+<li>
+<p>The following relation should hold between the values of these arguments:
+ <code>0 &lt;= initialCount &lt;= maxCount &amp;&amp; maxCount &gt; 0</code>
+ If this is violated, <code>Semaphore.Create(initialCount, maxCount)</code> throws an exception in production
+ mode or reports a test bug when run under coyote test.</p>
+</li>
+<li>
+<p>You can enter the so created semaphore by executing either of its <code>void Wait()</code> or
+<code>Task WaitAsync()</code> methods:</p>
+</li>
+<li>The <code>Wait()</code> method blocks the task until it can enter the <code>Semaphore</code>.</li>
+<li>
+<p>The <code>WaitAsync()</code> method returns a task that will complete when the semaphore has been entered.</p>
+</li>
+<li>
+<p>The <code>CurrentCount</code> property has as its value the current count of requests that can be granted.</p>
+</li>
+<li>
+<p>The <code>Release()</code> method. When you are done with handling the resource, you must exit the semaphore
+by invoking this method. Not releasing the granted access and staying inside the semaphore
+forever is a bug in your code that limits the capacity of the semaphore and if this bug happens
+repeatedly with other tasks, can lead to the semaphore getting full and permanently unavailable
+for use.
+Another possible error is to perform a <code>Release()</code> more times than the <code>maxCount</code> of a semaphore.
+This results in an exception (in production mode) and in a test bug when testing with Coyote.</p>
+</li>
+<li>
+<p>The <code>Dispose()</code> method. A <code>Semaphore</code> implements the <code>IDisposable</code> interface. Finally, when your
+code no longer needs the semaphore object you should dispose it using this method.
+Then it is a good practice to dispose of this <code>Semaphore</code> object, invoking this method.</p>
+</li>
+</ol>
+<h2 id="example-usage">Example usage</h2>
+<p>The code below demonstrates <code>Semaphore</code> in action:</p>
+<p>```csharp
+using Microsoft.Coyote.Tasks;</p>
+<p>public class SemaphoreExample
+{
+    private readonly Semaphore TheSemaphore;
+    private int ProtectedValue = 0;
+    private readonly int MaxCount;</p>
+<pre><code>public SemaphoreExample(int initialCurrentCount, int maxCount)
+{
+    this.MaxCount = maxCount;
+    this.TheSemaphore = Semaphore.Create(initialCurrentCount, maxCount);
+}
+
+public async Task RunTask(string taskName, int sleepMilliseconds, int newValue)
+{
+    this.WriteLine($"{taskName}: About to enter the semaphore. TheSemaphore.CurrentCount: {this.TheSemaphore.CurrentCount}");
+    await this.TheSemaphore.WaitAsync();
+    this.WriteLine($"{taskName}: Entered the semaphore. TheSemaphore.CurrentCount: {this.TheSemaphore.CurrentCount}");
+    await Task.Delay(sleepMilliseconds);
+    this.ProtectedValue = newValue;
+    this.WriteLine($"{taskName}: Waited {sleepMilliseconds}ms. Now exiting the semaphore. TheSemaphore.CurrentCount: {this.TheSemaphore.CurrentCount}");
+    this.TheSemaphore.Release();
+    this.WriteLine($"{taskName}: Exited the semaphore. TheSemaphore.CurrentCount: {this.TheSemaphore.CurrentCount}");
+    this.WriteLine($"{taskName}: this.ProtectedValue: {this.ProtectedValue}");
+    this.WriteLine("=====================================================================\n");
+}
+
+public async Task RunTask2(string taskName)
+{
+    var semaphoreCount = this.TheSemaphore.CurrentCount;
+    Console.WriteLine($"{taskName} starting. TheSemaphore.CurrentCount: {semaphoreCount}");
+
+    for (var i = 1; i &lt;= semaphoreCount + 1; i++)
+    {
+        Console.WriteLine($"{taskName}: ({i}) Entering the semaphore. TheSemaphore.CurrentCount: {this.TheSemaphore.CurrentCount}");
+        await this.TheSemaphore.WaitAsync();
+    }
+}
+
+private void WriteLine(string msg)
+{
+    string indent = new string(' ', (this.MaxCount - this.TheSemaphore.CurrentCount) * 2);
+    Console.Write(indent);
+    Console.WriteLine(msg);
+}
+</code></pre>
+<p>}
+ ```</p>
+<p>In the above example, the <code>RunTask</code> and  <code>RunTask2</code> methods use a <code>Semaphore</code> that allows only
+<code>maxCount</code> tasks to perform simultaneously inside the semaphore. The code below implements
+2 test scenarios, and in the first of them invokes <code>RunTask()</code> to create 3 different tasks using
+the semaphore, specifying for the semaphore <code>initialCount</code> = 2, and <code>maxCount</code> = 2.</p>
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
+public static class Program
+{
+    public static int Scenario = 1;
+
+    public static void Main()
+    {
+        RunTest();
+    }
+
+    [Microsoft.Coyote.SystematicTesting.Test]
+    public static void RunTest()
+    {
+        switch (Scenario)
+        {
+            case 1:
+                SemaphoreExample test1 = new SemaphoreExample(2, 2);
+                var task1 = test1.RunTask(&quot;Task1&quot;, 500, 1);
+                var task2 = test1.RunTask(&quot;Task2&quot;, 1000, 2);
+                var task3 = test1.RunTask(&quot;Task3&quot;, 1000, 3);
+                Task.WaitAll(task1, task2, task3);
+                Console.WriteLine(&quot;test complete&quot;);
+                break;
+
+            case 2:
+                SemaphoreExample test2 = new SemaphoreExample(2, 2);
+                var task4 = test2.RunTask2(&quot;Task4&quot;);
+                Task.WaitAny(task4);
+                break;
+        }
+    }
+}
+</code></pre>
+<p>In the first scenario (<code>Scenario == 1</code>) the method <code>RunTask()</code> is invoked 3 times and creates 3 tasks
+that run asynchronously, then the code awaits the completion of all three tasks.
+The first two tasks enter the semaphore and fill its capacity completely as its <code>maxCount</code> is 2.
+Inside the semaphore, <code>task1</code> awaits for 500 milliseconds, then sets <code>this.ProtectedValue = 1</code>
+and releases (exits) the semaphore. <code>task2</code> is also inside the semaphore with <code>task1</code> but it
+waits for 1000 milliseconds, thus it has to wait about 500 milliseconds more after <code>task1</code>
+exits the semaphore. Exactly when <code>task1</code> exits the semaphore, its current count is increased
+from 0 to 1 and this allows the third task, <code>task3</code> waiting for semaphore to be granted access.
+Having entered the semaphore, <code>task3</code> waits for 1000 milliseconds. The other occupant of the semaphore
+(<code>task2</code>) needs to wait only about 500ms more, then it sets <code>this.ProtectedValue = 2</code> and releases
+(exits) the semaphore. Thus for the remaining about 500 milliseconds <code>task3</code> is waiting as the
+sole occupant of the semaphore. Then it finally sets <code>this.ProtectedValue = 3</code> and releases (exits)
+the semaphore.</p>
+<p>When you build and run the sample, the expected output is produced:</p>
+<pre><code class="language-plain">Task1: About to enter the semaphore. TheSemaphore.CurrentCount: 2
+  Task1: Entered the semaphore. TheSemaphore.CurrentCount: 1
+  Task2: About to enter the semaphore. TheSemaphore.CurrentCount: 1
+    Task2: Entered the semaphore. TheSemaphore.CurrentCount: 0
+    Task3: About to enter the semaphore. TheSemaphore.CurrentCount: 0
+    Task1: Waited 500ms. Now exiting the semaphore. TheSemaphore.CurrentCount: 0
+    Task1: Exited the semaphore. TheSemaphore.CurrentCount: 0
+    Task1: this.ProtectedValue: 1
+    Task3: Entered the semaphore. TheSemaphore.CurrentCount: 0
+    =====================================================================
+
+    Task2: Waited 1000ms. Now exiting the semaphore. TheSemaphore.CurrentCount: 0
+  Task2: Exited the semaphore. TheSemaphore.CurrentCount: 1
+  Task2: this.ProtectedValue: 2
+  =====================================================================
+
+  Task3: Waited 1000ms. Now exiting the semaphore. TheSemaphore.CurrentCount: 1
+Task3: Exited the semaphore. TheSemaphore.CurrentCount: 2
+Task3: this.ProtectedValue: 3
+=====================================================================
+</code></pre>
+<p>Now, run the example with <code>coyote test</code>. The testing completes normally, without finding any test bugs.
+You will get output from the coyote test tool, similar to this:</p>
+<pre><code class="language-plain">... Testing statistics:
+..... Found 0 bugs.
+... Scheduling statistics:
+..... Explored 2000 schedules: 2000 fair and 0 unfair.
+</code></pre>
+<p>In the second scenario (<code>Scenario == 2</code>) a new <code>SemaphoreExample</code> instance is created with <code>initialCurrentCount</code>
+and <code>maxCount</code> having the same value 2. Then a single method (<code>RunTask2</code>) is invoked and the task
+it returns is awaited upon. Remarkably, the code of this task tries to enter the semaphore more times
+than its <code>CurrentCount</code> and this must end abnormally.</p>
+<p>In the sample, change this line:</p>
+<pre><code class="language-plain">public static int Scenario = 1;
+</code></pre>
+<p>to:</p>
+<pre><code class="language-plain">public static int Scenario = 2;
+</code></pre>
+<p>Then build and run. The execution hangs, you have to kill the program with Ctrl-C, and you see this output:</p>
+<pre><code class="language-plain">Task4 starting. TheSemaphore.CurrentCount: 2
+Task4: (1) Entering the semaphore. TheSemaphore.CurrentCount: 2
+Task4: (2) Entering the semaphore. TheSemaphore.CurrentCount: 1
+Task4: (3) Entering the semaphore. TheSemaphore.CurrentCount: 0
+</code></pre>
+<p>Now, run the sample with <code>coyote test</code>. This time there is no hanging and Coyote quickly finds
+and reports a test bug:</p>
+<pre><code class="language-plain">... Task 0 found a bug.
+... Emitting task 0 traces:
+..... Writing ...\Semaphores_0_2.txt
+..... Writing ...\Semaphores_0_2.schedule
+... Elapsed 0.1125501 sec.
+</code></pre>
+<p>Looking into the error file <code>Semaphores_0_2.txt</code> reveals this error message:</p>
+<pre><code class="language-plain">&lt;ErrorLog&gt; Deadlock detected. Task(0) is waiting to acquire a resource that is already acquired, but no other controlled tasks are enabled.
+</code></pre>
+
+    <br>
+      
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>

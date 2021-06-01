@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/ref/Microsoft.Coyote/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Overview - Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="../../css/main.css" rel="stylesheet">
+    <link href="../../css/player-controls.css" rel="stylesheet">
+    <link href="../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Microsoft.Coyote assembly", url: "#_top", children: [
+              {title: "Microsoft.Coyote namespace", url: "#microsoftcoyote-namespace" },
+              {title: "Microsoft.Coyote.Actors namespace", url: "#microsoftcoyoteactors-namespace" },
+              {title: "Microsoft.Coyote.Actors.Coverage namespace", url: "#microsoftcoyoteactorscoverage-namespace" },
+              {title: "Microsoft.Coyote.Actors.SharedObjects namespace", url: "#microsoftcoyoteactorssharedobjects-namespace" },
+              {title: "Microsoft.Coyote.Actors.Timers namespace", url: "#microsoftcoyoteactorstimers-namespace" },
+              {title: "Microsoft.Coyote.IO namespace", url: "#microsoftcoyoteio-namespace" },
+              {title: "Microsoft.Coyote.Random namespace", url: "#microsoftcoyoterandom-namespace" },
+              {title: "Microsoft.Coyote.Runtime namespace", url: "#microsoftcoyoteruntime-namespace" },
+              {title: "Microsoft.Coyote.Specifications namespace", url: "#microsoftcoyotespecifications-namespace" },
+              {title: "Microsoft.Coyote.Tasks namespace", url: "#microsoftcoyotetasks-namespace" },
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="../../assets/js/analytics.js"></script>
+      <script src="../../assets/js/plugins.js"></script>
+      <script src="../../assets/js/animate_trace.js"></script>
+      <script src="../../assets/js/animation.js"></script>
+      <script src="../../assets/js/progress_bar.js"></script>
+      <script src="../../assets/js/trace_model.js"></script>
+      <script src="../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../Microsoft.CoyoteNamespace/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../Microsoft.CoyoteNamespace/" class="btn btn-xs btn-link">
+        Namespace Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../case-studies/azure-blockchain-workbench/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../case-studies/azure-blockchain-workbench/" class="btn btn-xs btn-link">
+        Azure Blockchain Workbench
+      </a>
+    </div>
+    
+  </div>
+
+      
+
+      <h1 id="microsoftcoyote-assembly">Microsoft.Coyote assembly</h1>
+<h2 id="microsoftcoyote-namespace">Microsoft.Coyote namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="Configuration/">Configuration</a></td>
+<td>The Coyote project configurations.</td>
+</tr>
+<tr>
+<td>abstract class <a href="Event/">Event</a></td>
+<td>Abstract class representing an event.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyoteactors-namespace">Microsoft.Coyote.Actors namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abstract class <a href="../Microsoft.Coyote.Actors/Actor/">Actor</a></td>
+<td>Type that implements an actor. Inherit from this class to declare a custom actor.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/ActorId/">ActorId</a></td>
+<td>Unique actor id.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/">ActorRuntimeLogTextFormatter</a></td>
+<td>This class implements IActorRuntimeLog and generates output in a a human readable text format.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/AwaitableEventGroup-1/">AwaitableEventGroup&lt;T&gt;</a></td>
+<td>An object representing an awaitable long running context involving one or more actors. An <code>AwaitableEventGroup</code> can be provided as an optional argument in CreateActor and SendEvent. If a null <code>AwaitableEventGroup</code> is passed then the <code>EventGroup</code> is inherited from the sender or target actors (based on which ever one has a <a href="../Microsoft.Coyote.Actors/Actor/CurrentEventGroup/"><code>CurrentEventGroup</code></a>). In this way an <code>AwaitableEventGroup</code> is automatically communicated to all actors involved in completing some larger operation. Each actor involved can find the <code>AwaitableEventGroup</code> using their <a href="../Microsoft.Coyote.Actors/Actor/CurrentEventGroup/"><code>CurrentEventGroup</code></a> property.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/DefaultEvent/">DefaultEvent</a></td>
+<td>A default event that is generated by the runtime when no user-defined event is dequeued or received.</td>
+</tr>
+<tr>
+<td>enum <a href="../Microsoft.Coyote.Actors/DequeueStatus/">DequeueStatus</a></td>
+<td>The status returned as the result of an <a href="../Microsoft.Coyote.Actors/Actor/"><code>Actor</code></a> dequeue operation.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/EventGroup/">EventGroup</a></td>
+<td>An object representing a long running context involving one or more actors. An <code>EventGroup</code> can be provided as an optional argument in CreateActor and SendEvent. If a null <code>EventGroup</code> is passed then the <code>EventGroup</code> is inherited from the sender or target actors (based on which ever one has a <a href="../Microsoft.Coyote.Actors/Actor/CurrentEventGroup/"><code>CurrentEventGroup</code></a>). In this way an <code>EventGroup</code> is automatically communicated to all actors involved in completing some larger operation. Each actor involved can find the <code>EventGroup</code> using their <a href="../Microsoft.Coyote.Actors/Actor/CurrentEventGroup/"><code>CurrentEventGroup</code></a> property.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/HaltEvent/">HaltEvent</a></td>
+<td>The halt event.</td>
+</tr>
+<tr>
+<td>interface <a href="../Microsoft.Coyote.Actors/IActorRuntime/">IActorRuntime</a></td>
+<td>Interface that exposes runtime methods for creating and executing actors.</td>
+</tr>
+<tr>
+<td>interface <a href="../Microsoft.Coyote.Actors/IActorRuntimeLog/">IActorRuntimeLog</a></td>
+<td>Interface that allows an external module to track what is happening in the <a href="../Microsoft.Coyote.Actors/IActorRuntime/"><code>IActorRuntime</code></a>.</td>
+</tr>
+<tr>
+<td>delegate <a href="../Microsoft.Coyote.Actors/OnEventDroppedHandler/">OnEventDroppedHandler</a></td>
+<td>Handles the <a href="../Microsoft.Coyote.Actors/IActorRuntime/OnEventDropped/"><code>OnEventDropped</code></a> event.</td>
+</tr>
+<tr>
+<td>enum <a href="../Microsoft.Coyote.Actors/OnExceptionOutcome/">OnExceptionOutcome</a></td>
+<td>The outcome when an <a href="../Microsoft.Coyote.Actors/Actor/"><code>Actor</code></a> throws an exception.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Actors/RuntimeFactory/">RuntimeFactory</a></td>
+<td>Provides methods for creating a <a href="../Microsoft.Coyote.Actors/IActorRuntime/"><code>IActorRuntime</code></a> runtime.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/SendOptions/">SendOptions</a></td>
+<td>Represents a send event configuration that is used during testing.</td>
+</tr>
+<tr>
+<td>abstract class <a href="../Microsoft.Coyote.Actors/StateMachine/">StateMachine</a></td>
+<td>Type that implements a state machine actor. Inherit from this class to declare a custom actor with states, state transitions and event handlers.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/UnhandledEventException/">UnhandledEventException</a></td>
+<td>Signals that an <a href="../Microsoft.Coyote.Actors/Actor/"><code>Actor</code></a> received an unhandled event.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors/WildCardEvent/">WildCardEvent</a></td>
+<td>The wild card event.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyoteactorscoverage-namespace">Microsoft.Coyote.Actors.Coverage namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder.md">ActorRuntimeLogGraphBuilder</a></td>
+<td>Implements the <a href="../Microsoft.Coyote.Actors/IActorRuntimeLog/"><code>IActorRuntimeLog</code></a> and builds a directed graph from the recorded events and state transitions.</td>
+</tr>
+<tr>
+<td>class <a href="Microsoft.Coyote.Actors.Coverage/CoverageInfo.md">CoverageInfo</a></td>
+<td>Class for storing actor coverage-specific data across multiple testing iterations.</td>
+</tr>
+<tr>
+<td>class <a href="Microsoft.Coyote.Actors.Coverage/EventCoverage.md">EventCoverage</a></td>
+<td>This class maintains information about events received and sent from each state of each actor.</td>
+</tr>
+<tr>
+<td>class <a href="Microsoft.Coyote.Actors.Coverage/Graph.md">Graph</a></td>
+<td>A directed graph made up of Nodes and Links.</td>
+</tr>
+<tr>
+<td>class <a href="Microsoft.Coyote.Actors.Coverage/GraphLink.md">GraphLink</a></td>
+<td>A Link represents a directed graph connection between two Nodes.</td>
+</tr>
+<tr>
+<td>class <a href="Microsoft.Coyote.Actors.Coverage/GraphNode.md">GraphNode</a></td>
+<td>A Node of a Graph.</td>
+</tr>
+<tr>
+<td>class <a href="Microsoft.Coyote.Actors.Coverage/GraphObject.md">GraphObject</a></td>
+<td>A Node of a Graph.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyoteactorssharedobjects-namespace">Microsoft.Coyote.Actors.SharedObjects namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors.SharedObjects/SharedCounter/">SharedCounter</a></td>
+<td>A thread-safe counter that can be shared in-memory by actors.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/">SharedDictionary&lt;TKey,TValue&gt;</a></td>
+<td>A thread-safe dictionary that can be shared in-memory by actors.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Actors.SharedObjects/SharedDictionary/">SharedDictionary</a></td>
+<td>A thread-safe dictionary that can be shared in-memory by actors.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors.SharedObjects/SharedRegister-1/">SharedRegister&lt;T&gt;</a></td>
+<td>A thread-safe register that can be shared in-memory by actors.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Actors.SharedObjects/SharedRegister/">SharedRegister</a></td>
+<td>A thread-safe register that can be shared in-memory by actors.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyoteactorstimers-namespace">Microsoft.Coyote.Actors.Timers namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors.Timers/TimerElapsedEvent/">TimerElapsedEvent</a></td>
+<td>Defines a timer elapsed event that is sent from a timer to the actor that owns the timer.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Actors.Timers/TimerInfo/">TimerInfo</a></td>
+<td>Stores information about a timer that can send timeout events to its owner actor.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyoteio-namespace">Microsoft.Coyote.IO namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="../Microsoft.Coyote.IO/ConsoleLogger/">ConsoleLogger</a></td>
+<td>Logger that writes text to the console.</td>
+</tr>
+<tr>
+<td>interface <a href="../Microsoft.Coyote.IO/ILogger/">ILogger</a></td>
+<td>A logger is used to capture messages, warnings and errors.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.IO/InMemoryLogger/">InMemoryLogger</a></td>
+<td>Thread safe logger that writes text to an in-memory buffer. The buffered text can be extracted using the ToString() method.</td>
+</tr>
+<tr>
+<td>enum <a href="../Microsoft.Coyote.IO/LogSeverity/">LogSeverity</a></td>
+<td>Flag indicating the type of logging information being provided to the <a href="../Microsoft.Coyote.IO/ILogger/"><code>ILogger</code></a>.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.IO/TextWriterLogger/">TextWriterLogger</a></td>
+<td>Bridges custom user provided TextWriter logger so it can be passed into Coyote via the <a href="../Microsoft.Coyote.IO/ILogger/"><code>ILogger</code></a> interface.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyoterandom-namespace">Microsoft.Coyote.Random namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Random/Generator/">Generator</a></td>
+<td>Represents a pseudo-random value generator, which is an algorithm that produces a sequence of values that meet certain statistical requirements for randomness. During systematic testing, the generation of random values is controlled, which allows the runtime to explore combinations of choices to find bugs.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyoteruntime-namespace">Microsoft.Coyote.Runtime namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Runtime/AssertionFailureException/">AssertionFailureException</a></td>
+<td>The exception that is thrown by the Coyote runtime upon assertion failure.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Runtime/ExecutionCanceledException/">ExecutionCanceledException</a></td>
+<td>Exception that is thrown upon cancellation of testing execution by the runtime.</td>
+</tr>
+<tr>
+<td>interface <a href="../Microsoft.Coyote.Runtime/ICoyoteRuntime/">ICoyoteRuntime</a></td>
+<td>Interface that exposes base runtime methods for Coyote.</td>
+</tr>
+<tr>
+<td>delegate <a href="../Microsoft.Coyote.Runtime/OnFailureHandler/">OnFailureHandler</a></td>
+<td>Handles the <a href="../Microsoft.Coyote.Runtime/ICoyoteRuntime/OnFailure/"><code>OnFailure</code></a> event.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Runtime/RuntimeException/">RuntimeException</a></td>
+<td>An exception that is thrown by the Coyote runtime.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Runtime/RuntimeFactory/">RuntimeFactory</a></td>
+<td>Provides methods for creating a <a href="../Microsoft.Coyote.Runtime/ICoyoteRuntime/"><code>ICoyoteRuntime</code></a> runtime.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Runtime/SchedulingPoint/">SchedulingPoint</a></td>
+<td>Provides a set of static methods for declaring points in the execution where interleavings between operations should be explored during testing.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyotespecifications-namespace">Microsoft.Coyote.Specifications namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abstract class <a href="../Microsoft.Coyote.Specifications/Monitor/">Monitor</a></td>
+<td>Abstract class representing a specification monitor.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Specifications/Specification/">Specification</a></td>
+<td>Provides static methods that are useful for writing specifications and interacting with the systematic testing engine.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="microsoftcoyotetasks-namespace">Microsoft.Coyote.Tasks namespace</h2>
+<table>
+<thead>
+<tr>
+<th>public type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Tasks/AsyncLock/">AsyncLock</a></td>
+<td>A non-reentrant mutual exclusion lock that can be acquired asynchronously in a first-in first-out order. During testing, the lock is automatically replaced with a controlled mocked version.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Tasks/Semaphore/">Semaphore</a></td>
+<td>A semaphore that limits the number of tasks that can access a resource. During testing, the semaphore is automatically replaced with a controlled mocked version.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Tasks/SynchronizedBlock/">SynchronizedBlock</a></td>
+<td>Provides a mechanism that synchronizes access to objects. It is implemented as a thin wrapper on Monitor. During testing, the implementation is automatically replaced with a controlled mocked version. It can be used as a replacement of the lock keyword to allow systematic testing.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Tasks/Task-1/">Task&lt;TResult&gt;</a></td>
+<td>Represents an asynchronous operation that can return a value. Each <a href="../Microsoft.Coyote.Tasks/Task-1/"><code>Task</code></a> is a thin wrapper over Task and each call simply invokes the wrapped task. During testing, a <a href="../Microsoft.Coyote.Tasks/Task/"><code>Task</code></a> is controlled by the runtime and systematically interleaved with other asynchronous operations to find bugs.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Tasks/Task/">Task</a></td>
+<td>Represents an asynchronous operation. Each <a href="../Microsoft.Coyote.Tasks/Task/"><code>Task</code></a> is a thin wrapper over Task and each call simply invokes the wrapped task. During testing, a <a href="../Microsoft.Coyote.Tasks/Task/"><code>Task</code></a> is controlled by the runtime and systematically interleaved with other asynchronous operations to find bugs.</td>
+</tr>
+<tr>
+<td>class <a href="../Microsoft.Coyote.Tasks/TaskCompletionSource-1/">TaskCompletionSource&lt;TResult&gt;</a></td>
+<td>Represents the producer side of a task unbound to a delegate, providing access to the consumer side through the <a href="../Microsoft.Coyote.Tasks/TaskCompletionSource-1/Task/"><code>Task</code></a> property.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Tasks/TaskCompletionSource/">TaskCompletionSource</a></td>
+<td>Represents the producer side of a task unbound to a delegate, providing access to the consumer side through the <a href="../Microsoft.Coyote.Tasks/TaskCompletionSource-1/Task/"><code>Task</code></a> property.</td>
+</tr>
+<tr>
+<td>static class <a href="../Microsoft.Coyote.Tasks/TaskExtensions/">TaskExtensions</a></td>
+<td>Extension methods for Task and Task objects.</td>
+</tr>
+</tbody>
+</table>
+<!-- DO NOT EDIT: generated by xmldocmd for Microsoft.Coyote.dll -->
+
+    <br>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../Microsoft.CoyoteNamespace/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../Microsoft.CoyoteNamespace/" class="btn btn-xs btn-link">
+        Namespace Overview
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../../case-studies/azure-blockchain-workbench/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../../case-studies/azure-blockchain-workbench/" class="btn btn-xs btn-link">
+        Azure Blockchain Workbench
+      </a>
+    </div>
+    
+  </div>
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/concepts/actors/logging/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Logging - Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Logging", url: "#_top", children: [
+          ]},
+          {title: "Example of custom ILogger", url: "#example-of-custom-ilogger", children: [
+          ]},
+          {title: "IActorRuntimeLog", url: "#iactorruntimelog", children: [
+          ]},
+          {title: "Example of a custom IActorRuntimeLog", url: "#example-of-a-custom-iactorruntimelog", children: [
+          ]},
+          {title: "Customizing the ActorRuntimeLogTextFormatter", url: "#customizing-the-actorruntimelogtextformatter", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../state-machine-demo/" class="btn btn-xs btn-link">
+        State machine demo
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../sharing-objects/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../sharing-objects/" class="btn btn-xs btn-link">
+        Sharing objects
+      </a>
+    </div>
+    
+  </div>
+
+      
+
+      <h2 id="logging">Logging</h2>
+<p>The Coyote runtime provides a <code>Microsoft.Coyote.IO.ILogger</code> interface for logging so that your program output can be
+captured and included in <code>coyote</code> test tool output logs.  A default <code>Logger</code> is provided and can be
+accessed like this:</p>
+<table>
+<thead>
+<tr>
+<th>Programming Model</th>
+<th>Accessing the Logger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Task</code> based program</td>
+<td><code>Microsoft.Coyote.Actors.RuntimeFactory.Create().Logger</code></td>
+</tr>
+<tr>
+<td><code>Actor</code> based program</td>
+<td><code>Microsoft.Coyote.Runtime.RuntimeFactory.Create().Logger</code> <br/> <code>Actor.Logger</code>, <code>StateMachine.Logger</code>, <code>Monitor.Logger</code></td>
+</tr>
+</tbody>
+</table>
+<p>The default <code>Logger</code> is a <code>ConsoleLogger</code> which is used to write output to the <code>System.Console</code>.
+You can provide your own implementation of <code>Microsoft.Coyote.IO.ILogger</code> by setting the <code>Logger</code> property on the
+<code>ICoyoteRuntime</code> or <code>IActorRuntime</code>.</p>
+<p>The <code>IActorRuntime</code> also provides a higher level logging interface called <a href="#iactorruntimelog"><code>IActorRuntimeLog</code></a> for
+logging <code>Actor</code> and <code>StateMachine</code> activity.</p>
+<h2 id="example-of-custom-ilogger">Example of custom ILogger</h2>
+<p>It is possible to replace the default logger with a custom one. The following example captures all log output in a <code>StringBuilder</code>:</p>
+<pre><code class="language-csharp">public class CustomLogger : ILogger
+{
+    private StringBuilder StringBuilder;
+
+    public TextWriter TextWriter =&gt; throw new NotImplementedException();
+
+    public CustomLogger()
+    {
+        this.StringBuilder = new StringBuilder();
+    }
+
+    public void Write(string value)
+    {
+        this.Write(LogSeverity.Informational, value);
+    }
+
+    public void WriteLine(string value)
+    {
+        this.WriteLine(LogSeverity.Informational, value);
+    }
+
+    public void Write(string format, params object[] args)
+    {
+        this.Write(LogSeverity.Informational, format, args);
+    }
+
+    public void WriteLine(string format, params object[] args)
+    {
+        this.WriteLine(LogSeverity.Informational, format, args);
+    }
+
+    public void Write(LogSeverity severity, string format, object[] args)
+    {
+        this.Write(severity, string.Format(format, args));
+    }
+
+    public void WriteLine(LogSeverity severity, string format, object[] args)
+    {
+        this.WriteLine(severity, string.Format(format, args));
+    }
+
+    public void Write(LogSeverity severity, string value)
+    {
+        switch (severity)
+        {
+            case LogSeverity.Informational:
+                this.StringBuilder.Append(&quot;&lt;info&gt;&quot; + value);
+                break;
+            case LogSeverity.Warning:
+                this.StringBuilder.Append(&quot;&lt;warning&gt;&quot; + value);
+                break;
+            case LogSeverity.Error:
+                this.StringBuilder.Append(&quot;&lt;error&gt;&quot; + value);
+                break;
+            case LogSeverity.Important:
+                this.StringBuilder.Append(&quot;&lt;important&gt;&quot; + value);
+                break;
+        }
+    }
+
+    public void WriteLine(LogSeverity severity, string value)
+    {
+        this.Write(severity, value);
+        this.StringBuilder.AppendLine();
+    }
+
+    public override string ToString()
+    {
+        return this.StringBuilder.ToString();
+    }
+
+    public void Dispose()
+    {
+        // todo
+    }
+}
+</code></pre>
+<p>To replace the default logger, call the following <code>IActorRuntime</code> method:</p>
+<pre><code class="language-csharp">runtime.Logger = new CustomLogger();
+</code></pre>
+<p>The above method replaces the previously installed logger with the specified one and returns the
+previously installed logger.</p>
+<p>Note that the old <code>Logger</code> might be disposable, so if you care about disposing the old logger at
+the same time you may need to write this instead:</p>
+<pre><code class="language-csharp">using (var oldLogger = runtime.Logger)
+{
+   runtime.Logger = new CustomLogger();
+}
+</code></pre>
+<p>You could write a custom <code>ILogger</code> to intercept all logging messages and send them to an Azure Log
+table, or over a TCP socket.</p>
+<h2 id="iactorruntimelog">IActorRuntimeLog</h2>
+<p>The default <code>IActorRuntimeLog</code> implementation is the <code>ActorRuntimeLogTextFormatter</code> base class which
+is responsible for formatting all <code>Actor</code> and <code>StateMachine</code> activity as text and writing that out
+using the installed <code>Logger</code>.</p>
+<p>You can add your own implementation of <code>IActorRuntimeLog</code> or <code>ActorRuntimeLogTextFormatter</code> using
+the <code>RegisterLog</code> method on <code>IActorRuntime</code>.  This is additive so you can have the default
+<code>ActorRuntimeLogTextFormatter</code> and another logger running at the same time.  For example, see the
+<code>ActorRuntimeLogGraphBuilder</code> class which implements <code>IActorRuntimeLog</code> and generates a directed
+graph representing all activities that happened during the execution of your actors. See <a href="../../../how-to/coverage/">activity
+coverage</a> for an example graph output. The <code>coyote</code> test tool
+sets this up for you when you specify <code>--graph</code> or <code>--coverage activity</code> command line options.</p>
+<p>The <code>--verbosity</code> command line option can also affect the default logging behavior. When
+<code>--verbosity</code> is specified all log output is written to the <code>System.Console</code> by default, but you
+can specify different levels of output using <code>--verbosity quiet</code> to get no output, <code>--verbosity
+minimal</code> to see only error messages and <code>--verbosity normal</code> to get errors and warnings. This can
+produce a lot of output especially if you run many testing iterations. It is usually more useful to
+only capture the output of the one failing iteration in a log file and this is done automatically
+by the testing runtime when <code>--verbosity</code> is not specified.</p>
+<p>See <a href="../../../ref/Microsoft.Coyote.Actors/IActorRuntimeLog/">IActorRuntimeLog API documentation</a>.</p>
+<h2 id="example-of-a-custom-iactorruntimelog">Example of a custom IActorRuntimeLog</h2>
+<p>You can also implement your own <code>IActorRuntimeLog</code>. The following is an example of how to do this:</p>
+<pre><code class="language-csharp">internal class CustomLogWriter : IActorRuntimeLog
+{
+  // Callbacks on runtime events
+
+  public void OnCreateActor(ActorId id, ActorId creator)
+  {
+    // Override to change the behavior.
+  }
+
+  public void OnEnqueueEvent(ActorId id, Event e)
+  {
+    // Override to change the behavior.
+  }
+
+  // More methods to implement.
+}
+</code></pre>
+<p>You can then register your new implementation using the following <code>IActorRuntime</code> method:</p>
+<pre><code class="language-csharp">runtime.RegisterLog(new CustomLogWriter());
+</code></pre>
+<p>You can register multiple <code>IActorRuntimeLog</code> objects in case you have loggers that are doing very
+different things. The runtime will invoke each callback for every registered <code>IActorRuntimeLog</code>.</p>
+<h2 id="customizing-the-actorruntimelogtextformatter">Customizing the ActorRuntimeLogTextFormatter</h2>
+<p>You can modify the format of text log messages by providing your own <code>ActorRuntimeLogTextFormatter</code>.
+You can subclass the default <code>ActorRuntimeLogTextFormatter</code> implementation to override its default behavior.
+The following is an example of how to do this:</p>
+<pre><code class="language-csharp">internal class CustomLogFormatter : ActorRuntimeLogTextFormatter
+{
+  // Methods for formatting log messages
+
+  public override void OnCreateActor(ActorId id, ActorId creator)
+  {
+    // Override to change the text to be logged.
+    this.Logger.WriteLine(&quot;Hello!&quot;);
+  }
+
+  public override void OnEnqueueEvent(ActorId id, Event e)
+  {
+    // Override to conditionally hide certain events from the log.
+    if (!(e is SecretEvent))
+    {
+      base.OnEnqueueEvent(id, e);
+    }
+  }
+
+  // More methods that can be overridden.
+}
+</code></pre>
+<p>You can then replace the default <code>ActorRuntimeLogTextFormatter</code> with your new implementation using
+the following <code>IActorRuntime</code> method:</p>
+<pre><code class="language-csharp">runtime.RegisterLog(new CustomLogFormatter());
+</code></pre>
+<p>The above method replaces the previously installed <code>ActorRuntimeLogTextFormatter</code> with the specified
+one.</p>
+<p>See <a href="../../../ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/">ActorRuntimeLogTextFormatter</a>
+documentation.</p>
+
+    <br>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="../state-machine-demo/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="../state-machine-demo/" class="btn btn-xs btn-link">
+        State machine demo
+      </a>
+    </div>
+    
+    <div class="wm-article-nav">
+      <a href="../sharing-objects/" class="btn btn-xs btn-default pull-left">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        Previous</a><a href="../sharing-objects/" class="btn btn-xs btn-link">
+        Sharing objects
+      </a>
+    </div>
+    
+  </div>
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>

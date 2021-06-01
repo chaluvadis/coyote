@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="None">
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/player-controls.css" rel="stylesheet">
+    <link href="css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+      <script src="/coyote/js/elasticlunr.min.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = (window === window.parent);
+        
+        var pageToc = [
+          {title: "Concurrency Unit Testing with Coyote", url: "#_top", children: [
+              {title: "Fearless coding for concurrent software", url: "#fearless-coding-for-concurrent-software" },
+              {title: "Explore Coyote", url: "#explore-coyote" },
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="assets/js/analytics.js"></script>
+      <script src="assets/js/plugins.js"></script>
+      <script src="assets/js/animate_trace.js"></script>
+      <script src="assets/js/animation.js"></script>
+      <script src="assets/js/progress_bar.js"></script>
+      <script src="assets/js/trace_model.js"></script>
+      <script src="assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<nav class="navbar wm-page-top-frame">
+  <div class="container-fluid wm-top-container">
+    
+    <div class="wm-top-tool pull-right wm-vcenter">
+      <form class="dropdown wm-vcentered" id="wm-search-form" action="/coyote/search.html">
+        
+        <button id="wm-search-show" class="btn btn-sm btn-default" type="submit" aria-label="Show search"
+          ><i class="fa fa-search" aria-hidden="true"></i></button>
+
+        <div class="input-group input-group-sm wm-top-search">
+          <input type="text" name="q" class="form-control" id="mkdocs-search-query" placeholder="Search" autocomplete="off">
+          <span class="input-group-btn" role="search">
+            
+            <button class="btn btn-default dropdown-toggle collapse" data-toggle="dropdown" type="button" aria-label="Search dropdown"><span class="caret"></span></button>
+            <ul id="mkdocs-search-results" class="dropdown-menu dropdown-menu-right"></ul>
+            <button id="wm-search-go" class="btn btn-default" type="submit" aria-label="Search"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+        </div>
+      </form>
+    </div>
+
+    
+    <div class="wm-top-tool wm-vcenter pull-right wm-small-left">
+      <button id="wm-toc-button" type="button" class="btn btn-sm btn-default wm-vcentered navbar-toggler" aria-label="Menu"><div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div></button>
+    </div>
+
+    
+    
+
+    
+    <a href="" class="wm-top-brand wm-top-link wm-vcenter">
+      
+      <div class="wm-top-title">
+        Coyote<br>
+        
+      </div>
+    </a>
+  </div>
+</nav>
+  <div id="main-content" class="wm-page-top-frame">
+    
+<nav class="wm-toc-pane">
+  
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text" href="https://github.com/microsoft/coyote/">
+        <i class="fa fa-github"></i>
+
+        GitHub
+      </a>
+      </li>
+    </ul>
+  <ul class="wm-toctree">
+        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Home</a>
+</li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Overview</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/benefits/" class="wm-article-link wm-toc-text">Key benefits</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/how/" class="wm-article-link wm-toc-text">How does it work</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/videos/" class="wm-article-link wm-toc-text">Videos</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/publications/" class="wm-article-link wm-toc-text">Publications</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="overview/faq/" class="wm-article-link wm-toc-text">FAQ</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Get started with Coyote</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/install/" class="wm-article-link wm-toc-text">Installing Coyote</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/using-coyote/" class="wm-article-link wm-toc-text">Using Coyote</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/build-source/" class="wm-article-link wm-toc-text">Building from source</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="get-started/telemetry/" class="wm-article-link wm-toc-text">Telemetry</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Tutorials</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/overview/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/first-concurrency-unit-test/" class="wm-article-link wm-toc-text">Write your first concurrency unit test</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/test-concurrent-operations/" class="wm-article-link wm-toc-text">Test concurrent CRUD operations</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Writing mocks</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/mocks/mock-dependencies/" class="wm-article-link wm-toc-text">Mocking dependencies for testing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/mocks/optimistic-concurrency-control/" class="wm-article-link wm-toc-text">Simulating optimistic concurrency control</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 "><a href="tutorials/test-failover/" class="wm-article-link wm-toc-text">Test failover and liveness</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Actors and state machines</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/hello-world/" class="wm-article-link wm-toc-text">Hello world with actors</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/raft-azure/" class="wm-article-link wm-toc-text">Raft actor service (on Azure)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/raft-mocking/" class="wm-article-link wm-toc-text">Raft actor service (mocked)</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="tutorials/actors/test-failover/" class="wm-article-link wm-toc-text">Test failover and liveness</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Concepts</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/non-determinism/" class="wm-article-link wm-toc-text">Program non-determinism</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/concurrency-unit-testing/" class="wm-article-link wm-toc-text">Concurrency unit testing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/binary-rewriting/" class="wm-article-link wm-toc-text">Binary rewriting for systematic testing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="concepts/specifications/" class="wm-article-link wm-toc-text">Program specifications</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Actors and state machines</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/overview/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/state-machines/" class="wm-article-link wm-toc-text">State machines</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/actor-semantics/" class="wm-article-link wm-toc-text">Actor semantics</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/termination/" class="wm-article-link wm-toc-text">Actor termination</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/timers/" class="wm-article-link wm-toc-text">Using timers in actors</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/event-groups/" class="wm-article-link wm-toc-text">Event groups</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/uncaught-exceptions/" class="wm-article-link wm-toc-text">Semantics of unhandled exceptions</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/sharing-objects/" class="wm-article-link wm-toc-text">Sharing objects</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/logging/" class="wm-article-link wm-toc-text">Logging</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/state-machine-demo/" class="wm-article-link wm-toc-text">State machine demo</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="concepts/actors/why-actors/" class="wm-article-link wm-toc-text">Why Coyote actors?</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">How-to guides</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/unit-testing/" class="wm-article-link wm-toc-text">Integrate with a unit testing framework</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/liveness-checking/" class="wm-article-link wm-toc-text">Find liveness bugs effectively</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/coverage/" class="wm-article-link wm-toc-text">Track code and actor activity coverage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="how-to/generate-dgml/" class="wm-article-link wm-toc-text">Generate DGML diagrams</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Samples</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="samples/overview/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Task-based C# programs</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="samples/tasks/bounded-buffer/" class="wm-article-link wm-toc-text">Deadlock in bounded-buffer</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Actors and state machines</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="samples/actors/failure-detector/" class="wm-article-link wm-toc-text">Bug in failure detector</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 "><a href="samples/actors/failover-robot-navigator/" class="wm-article-link wm-toc-text">Robot navigator failover</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Case studies</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="case-studies/azure-batch-service/" class="wm-article-link wm-toc-text">Azure Batch Service</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="case-studies/azure-blockchain-service/" class="wm-article-link wm-toc-text">Azure Blockchain Service</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev2 "><a href="case-studies/azure-blockchain-workbench/" class="wm-article-link wm-toc-text">Azure Blockchain Workbench</a>
+</li>
+  </ul>
+</li>
+
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">API documentation</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ref/Microsoft.Coyote/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.CoyoteNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Event</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Event/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Event/Event/" class="wm-article-link wm-toc-text">Event</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Configuration</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithRandomStrategy/" class="wm-article-link wm-toc-text">WithRandomStrategy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithProbabilisticStrategy/" class="wm-article-link wm-toc-text">WithProbabilisticStrategy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithPCTStrategy/" class="wm-article-link wm-toc-text">WithPCTStrategy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithRLStrategy/" class="wm-article-link wm-toc-text">WithRLStrategy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithReplayStrategy/" class="wm-article-link wm-toc-text">WithReplayStrategy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithTestingIterations/" class="wm-article-link wm-toc-text">WithTestingIterations</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithTestingTimeout/" class="wm-article-link wm-toc-text">WithTestingTimeout</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithRelaxedControlledTestingEnabled/" class="wm-article-link wm-toc-text">WithRelaxedControlledTestingEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithConcurrencyFuzzingEnabled/" class="wm-article-link wm-toc-text">WithConcurrencyFuzzingEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithNoBugTraceRepro/" class="wm-article-link wm-toc-text">WithNoBugTraceRepro</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithMaxSchedulingSteps/" class="wm-article-link wm-toc-text">WithMaxSchedulingSteps</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithLivenessTemperatureThreshold/" class="wm-article-link wm-toc-text">WithLivenessTemperatureThreshold</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithTimeoutDelay/" class="wm-article-link wm-toc-text">WithTimeoutDelay</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithDeadlockTimeout/" class="wm-article-link wm-toc-text">WithDeadlockTimeout</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithRandomGeneratorSeed/" class="wm-article-link wm-toc-text">WithRandomGeneratorSeed</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithVerbosityEnabled/" class="wm-article-link wm-toc-text">WithVerbosityEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithActivityCoverageEnabled/" class="wm-article-link wm-toc-text">WithActivityCoverageEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithDgmlGraphEnabled/" class="wm-article-link wm-toc-text">WithDgmlGraphEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithXmlLogEnabled/" class="wm-article-link wm-toc-text">WithXmlLogEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/WithTelemetryEnabled/" class="wm-article-link wm-toc-text">WithTelemetryEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/Configuration/" class="wm-article-link wm-toc-text">Configuration</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/SchedulingStrategy/" class="wm-article-link wm-toc-text">SchedulingStrategy</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/TestingIterations/" class="wm-article-link wm-toc-text">TestingIterations</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/RandomGeneratorSeed/" class="wm-article-link wm-toc-text">RandomGeneratorSeed</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/MaxUnfairSchedulingSteps/" class="wm-article-link wm-toc-text">MaxUnfairSchedulingSteps</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/MaxFairSchedulingSteps/" class="wm-article-link wm-toc-text">MaxFairSchedulingSteps</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/StrategyBound/" class="wm-article-link wm-toc-text">StrategyBound</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/TimeoutDelay/" class="wm-article-link wm-toc-text">TimeoutDelay</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/LivenessTemperatureThreshold/" class="wm-article-link wm-toc-text">LivenessTemperatureThreshold</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/IsVerbose/" class="wm-article-link wm-toc-text">IsVerbose</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/LogLevel/" class="wm-article-link wm-toc-text">LogLevel</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/ReportActivityCoverage/" class="wm-article-link wm-toc-text">ReportActivityCoverage</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/IsDgmlGraphEnabled/" class="wm-article-link wm-toc-text">IsDgmlGraphEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote/Configuration/IsXmlLogEnabled/" class="wm-article-link wm-toc-text">IsXmlLogEnabled</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Actors</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.ActorsNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Actor</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/CreateActor/" class="wm-article-link wm-toc-text">CreateActor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/SendEvent/" class="wm-article-link wm-toc-text">SendEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/ReceiveEventAsync/" class="wm-article-link wm-toc-text">ReceiveEventAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/StartTimer/" class="wm-article-link wm-toc-text">StartTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/StartPeriodicTimer/" class="wm-article-link wm-toc-text">StartPeriodicTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/StopTimer/" class="wm-article-link wm-toc-text">StopTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/RandomBoolean/" class="wm-article-link wm-toc-text">RandomBoolean</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/RandomInteger/" class="wm-article-link wm-toc-text">RandomInteger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/Monitor/" class="wm-article-link wm-toc-text">Monitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/Assert/" class="wm-article-link wm-toc-text">Assert</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/RaiseHaltEvent/" class="wm-article-link wm-toc-text">RaiseHaltEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnInitializeAsync/" class="wm-article-link wm-toc-text">OnInitializeAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnEventDequeuedAsync/" class="wm-article-link wm-toc-text">OnEventDequeuedAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnEventIgnored/" class="wm-article-link wm-toc-text">OnEventIgnored</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnEventDeferred/" class="wm-article-link wm-toc-text">OnEventDeferred</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnEventHandledAsync/" class="wm-article-link wm-toc-text">OnEventHandledAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnEventUnhandledAsync/" class="wm-article-link wm-toc-text">OnEventUnhandledAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnExceptionHandledAsync/" class="wm-article-link wm-toc-text">OnExceptionHandledAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnHaltAsync/" class="wm-article-link wm-toc-text">OnHaltAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/OnException/" class="wm-article-link wm-toc-text">OnException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/Equals/" class="wm-article-link wm-toc-text">Equals</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/GetHashCode/" class="wm-article-link wm-toc-text">GetHashCode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/ToString/" class="wm-article-link wm-toc-text">ToString</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/Actor/" class="wm-article-link wm-toc-text">Actor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/Id/" class="wm-article-link wm-toc-text">Id</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/CurrentEventGroup/" class="wm-article-link wm-toc-text">CurrentEventGroup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/Logger/" class="wm-article-link wm-toc-text">Logger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor/HashedState/" class="wm-article-link wm-toc-text">HashedState</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">ActorId</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/Equals/" class="wm-article-link wm-toc-text">Equals</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/GetHashCode/" class="wm-article-link wm-toc-text">GetHashCode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/ToString/" class="wm-article-link wm-toc-text">ToString</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/CompareTo/" class="wm-article-link wm-toc-text">CompareTo</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/Runtime/" class="wm-article-link wm-toc-text">Runtime</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/IsNameUsedForHashing/" class="wm-article-link wm-toc-text">IsNameUsedForHashing</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/Value/" class="wm-article-link wm-toc-text">Value</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/NameValue/" class="wm-article-link wm-toc-text">NameValue</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/Type/" class="wm-article-link wm-toc-text">Type</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorId/Name/" class="wm-article-link wm-toc-text">Name</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Actors/DequeueStatus/" class="wm-article-link wm-toc-text">DequeueStatus</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">AwaitableEventGroup<T></span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/SetResult/" class="wm-article-link wm-toc-text">SetResult</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/TrySetResult/" class="wm-article-link wm-toc-text">TrySetResult</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/SetCancelled/" class="wm-article-link wm-toc-text">SetCancelled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/TrySetCanceled/" class="wm-article-link wm-toc-text">TrySetCanceled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/SetException/" class="wm-article-link wm-toc-text">SetException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/TrySetException/" class="wm-article-link wm-toc-text">TrySetException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/GetAwaiter/" class="wm-article-link wm-toc-text">GetAwaiter</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/AwaitableEventGroup/" class="wm-article-link wm-toc-text">AwaitableEventGroup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/Task/" class="wm-article-link wm-toc-text">Task</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/IsCompleted/" class="wm-article-link wm-toc-text">IsCompleted</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/IsCanceled/" class="wm-article-link wm-toc-text">IsCanceled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/AwaitableEventGroup-1/IsFaulted/" class="wm-article-link wm-toc-text">IsFaulted</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">DefaultEvent</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/DefaultEvent/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/DefaultEvent/Instance/" class="wm-article-link wm-toc-text">Instance</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">EventGroup</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/EventGroup/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/EventGroup/EventGroup/" class="wm-article-link wm-toc-text">EventGroup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/EventGroup/Id/" class="wm-article-link wm-toc-text">Id</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/EventGroup/Name/" class="wm-article-link wm-toc-text">Name</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/EventGroup/Null/" class="wm-article-link wm-toc-text"></a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">HaltEvent</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/HaltEvent/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/HaltEvent/Instance/" class="wm-article-link wm-toc-text">Instance</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">WildCardEvent</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/WildCardEvent/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/WildCardEvent/WildCardEvent/" class="wm-article-link wm-toc-text">WildCardEvent</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Actors/OnEventDroppedHandler/" class="wm-article-link wm-toc-text">OnEventDroppedHandler</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Actors/OnExceptionOutcome/" class="wm-article-link wm-toc-text">OnExceptionOutcome</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">UnhandledEventException</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/UnhandledEventException/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/UnhandledEventException/UnhandledEvent/" class="wm-article-link wm-toc-text">UnhandledEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/UnhandledEventException/CurrentStateName/" class="wm-article-link wm-toc-text">CurrentStateName</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">IActorRuntime</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/CreateActorId/" class="wm-article-link wm-toc-text">CreateActorId</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/CreateActorIdFromName/" class="wm-article-link wm-toc-text">CreateActorIdFromName</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/CreateActor/" class="wm-article-link wm-toc-text">CreateActor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/SendEvent/" class="wm-article-link wm-toc-text">SendEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/GetCurrentEventGroup/" class="wm-article-link wm-toc-text">GetCurrentEventGroup</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/RegisterLog/" class="wm-article-link wm-toc-text">RegisterLog</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/RemoveLog/" class="wm-article-link wm-toc-text">RemoveLog</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntime/OnEventDropped/" class="wm-article-link wm-toc-text">OnEventDropped</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">ActorRuntimeLogTextFormatter</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnAssertionFailure/" class="wm-article-link wm-toc-text">OnAssertionFailure</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnCreateActor/" class="wm-article-link wm-toc-text">OnCreateActor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnCreateStateMachine/" class="wm-article-link wm-toc-text">OnCreateStateMachine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnCreateMonitor/" class="wm-article-link wm-toc-text">OnCreateMonitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnCreateTimer/" class="wm-article-link wm-toc-text">OnCreateTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnDefaultEventHandler/" class="wm-article-link wm-toc-text">OnDefaultEventHandler</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnEventHandlerTerminated/" class="wm-article-link wm-toc-text">OnEventHandlerTerminated</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnDequeueEvent/" class="wm-article-link wm-toc-text">OnDequeueEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnEnqueueEvent/" class="wm-article-link wm-toc-text">OnEnqueueEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnExceptionHandled/" class="wm-article-link wm-toc-text">OnExceptionHandled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnExceptionThrown/" class="wm-article-link wm-toc-text">OnExceptionThrown</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnExecuteAction/" class="wm-article-link wm-toc-text">OnExecuteAction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnGotoState/" class="wm-article-link wm-toc-text">OnGotoState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnHalt/" class="wm-article-link wm-toc-text">OnHalt</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnMonitorExecuteAction/" class="wm-article-link wm-toc-text">OnMonitorExecuteAction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnMonitorProcessEvent/" class="wm-article-link wm-toc-text">OnMonitorProcessEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnMonitorRaiseEvent/" class="wm-article-link wm-toc-text">OnMonitorRaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnMonitorStateTransition/" class="wm-article-link wm-toc-text">OnMonitorStateTransition</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnMonitorError/" class="wm-article-link wm-toc-text">OnMonitorError</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnPopState/" class="wm-article-link wm-toc-text">OnPopState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnPopStateUnhandledEvent/" class="wm-article-link wm-toc-text">OnPopStateUnhandledEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnPushState/" class="wm-article-link wm-toc-text">OnPushState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnRaiseEvent/" class="wm-article-link wm-toc-text">OnRaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnHandleRaisedEvent/" class="wm-article-link wm-toc-text">OnHandleRaisedEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnReceiveEvent/" class="wm-article-link wm-toc-text">OnReceiveEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnSendEvent/" class="wm-article-link wm-toc-text">OnSendEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnStateTransition/" class="wm-article-link wm-toc-text">OnStateTransition</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnStopTimer/" class="wm-article-link wm-toc-text">OnStopTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnStrategyDescription/" class="wm-article-link wm-toc-text">OnStrategyDescription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnWaitEvent/" class="wm-article-link wm-toc-text">OnWaitEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnRandom/" class="wm-article-link wm-toc-text">OnRandom</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/OnCompleted/" class="wm-article-link wm-toc-text">OnCompleted</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/ActorRuntimeLogTextFormatter/" class="wm-article-link wm-toc-text">ActorRuntimeLogTextFormatter</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/ActorRuntimeLogTextFormatter/Logger/" class="wm-article-link wm-toc-text">Logger</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">IActorRuntimeLog</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnCreateActor/" class="wm-article-link wm-toc-text">OnCreateActor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnCreateStateMachine/" class="wm-article-link wm-toc-text">OnCreateStateMachine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnExecuteAction/" class="wm-article-link wm-toc-text">OnExecuteAction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnSendEvent/" class="wm-article-link wm-toc-text">OnSendEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnRaiseEvent/" class="wm-article-link wm-toc-text">OnRaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnHandleRaisedEvent/" class="wm-article-link wm-toc-text">OnHandleRaisedEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnEnqueueEvent/" class="wm-article-link wm-toc-text">OnEnqueueEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnDequeueEvent/" class="wm-article-link wm-toc-text">OnDequeueEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnReceiveEvent/" class="wm-article-link wm-toc-text">OnReceiveEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnWaitEvent/" class="wm-article-link wm-toc-text">OnWaitEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnStateTransition/" class="wm-article-link wm-toc-text">OnStateTransition</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnGotoState/" class="wm-article-link wm-toc-text">OnGotoState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnPushState/" class="wm-article-link wm-toc-text">OnPushState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnPopState/" class="wm-article-link wm-toc-text">OnPopState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnDefaultEventHandler/" class="wm-article-link wm-toc-text">OnDefaultEventHandler</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnEventHandlerTerminated/" class="wm-article-link wm-toc-text">OnEventHandlerTerminated</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnHalt/" class="wm-article-link wm-toc-text">OnHalt</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnPopStateUnhandledEvent/" class="wm-article-link wm-toc-text">OnPopStateUnhandledEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnExceptionThrown/" class="wm-article-link wm-toc-text">OnExceptionThrown</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnExceptionHandled/" class="wm-article-link wm-toc-text">OnExceptionHandled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnCreateTimer/" class="wm-article-link wm-toc-text">OnCreateTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnStopTimer/" class="wm-article-link wm-toc-text">OnStopTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnCreateMonitor/" class="wm-article-link wm-toc-text">OnCreateMonitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnMonitorExecuteAction/" class="wm-article-link wm-toc-text">OnMonitorExecuteAction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnMonitorProcessEvent/" class="wm-article-link wm-toc-text">OnMonitorProcessEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnMonitorRaiseEvent/" class="wm-article-link wm-toc-text">OnMonitorRaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnMonitorStateTransition/" class="wm-article-link wm-toc-text">OnMonitorStateTransition</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnMonitorError/" class="wm-article-link wm-toc-text">OnMonitorError</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnRandom/" class="wm-article-link wm-toc-text">OnRandom</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnAssertionFailure/" class="wm-article-link wm-toc-text">OnAssertionFailure</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnStrategyDescription/" class="wm-article-link wm-toc-text">OnStrategyDescription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/IActorRuntimeLog/OnCompleted/" class="wm-article-link wm-toc-text">OnCompleted</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">RuntimeFactory</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/RuntimeFactory/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/RuntimeFactory/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SendOptions</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/SendOptions/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/SendOptions/ToString/" class="wm-article-link wm-toc-text">ToString</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/SendOptions/SendOptions/" class="wm-article-link wm-toc-text">SendOptions</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/SendOptions/Default/" class="wm-article-link wm-toc-text">Default</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/SendOptions/MustHandle/" class="wm-article-link wm-toc-text">MustHandle</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/SendOptions/Assert/" class="wm-article-link wm-toc-text">Assert</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/SendOptions/HashedState/" class="wm-article-link wm-toc-text">HashedState</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/RaiseEvent/" class="wm-article-link wm-toc-text">RaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/RaiseGotoStateEvent/" class="wm-article-link wm-toc-text">RaiseGotoStateEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/RaisePushStateEvent/" class="wm-article-link wm-toc-text">RaisePushStateEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/RaisePopStateEvent/" class="wm-article-link wm-toc-text">RaisePopStateEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/RaiseHaltEvent/" class="wm-article-link wm-toc-text">RaiseHaltEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/OnEventHandledAsync/" class="wm-article-link wm-toc-text">OnEventHandledAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/StateMachine/" class="wm-article-link wm-toc-text">StateMachine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine/CurrentState/" class="wm-article-link wm-toc-text">CurrentState</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Actor.OnEventDoActionAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor.OnEventDoActionAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/Actor.OnEventDoActionAttribute/OnEventDoActionAttribute/" class="wm-article-link wm-toc-text">OnEventDoActionAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State/State/" class="wm-article-link wm-toc-text">State</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.StateGroup</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.StateGroup/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.StateGroup/StateGroup/" class="wm-article-link wm-toc-text">StateGroup</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.StartAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.StartAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.StartAttribute/StartAttribute/" class="wm-article-link wm-toc-text">StartAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.OnEntryAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEntryAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEntryAttribute/OnEntryAttribute/" class="wm-article-link wm-toc-text">OnEntryAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.OnExitAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnExitAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnExitAttribute/OnExitAttribute/" class="wm-article-link wm-toc-text">OnExitAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.OnEventGotoStateAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEventGotoStateAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEventGotoStateAttribute/OnEventGotoStateAttribute/" class="wm-article-link wm-toc-text">OnEventGotoStateAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.OnEventPushStateAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEventPushStateAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEventPushStateAttribute/OnEventPushStateAttribute/" class="wm-article-link wm-toc-text">OnEventPushStateAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.OnEventDoActionAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEventDoActionAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.OnEventDoActionAttribute/OnEventDoActionAttribute/" class="wm-article-link wm-toc-text">OnEventDoActionAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.DeferEventsAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.DeferEventsAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.DeferEventsAttribute/DeferEventsAttribute/" class="wm-article-link wm-toc-text">DeferEventsAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">StateMachine.State.IgnoreEventsAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.IgnoreEventsAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors/StateMachine.State.IgnoreEventsAttribute/IgnoreEventsAttribute/" class="wm-article-link wm-toc-text">IgnoreEventsAttribute</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Actors.Coverage</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Actors.CoverageNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">EventCoverage</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/EventCoverage.md" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/EventCoverage/GetEventsReceived.md" class="wm-article-link wm-toc-text">GetEventsReceived</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/EventCoverage/GetEventsSent.md" class="wm-article-link wm-toc-text">GetEventsSent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/EventCoverage/EventCoverage.md" class="wm-article-link wm-toc-text">EventCoverage</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">ActorRuntimeLogGraphBuilder</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder.md" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnCreateActor.md" class="wm-article-link wm-toc-text">OnCreateActor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnCreateStateMachine.md" class="wm-article-link wm-toc-text">OnCreateStateMachine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnSendEvent.md" class="wm-article-link wm-toc-text">OnSendEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnRaiseEvent.md" class="wm-article-link wm-toc-text">OnRaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnHandleRaisedEvent.md" class="wm-article-link wm-toc-text">OnHandleRaisedEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnEnqueueEvent.md" class="wm-article-link wm-toc-text">OnEnqueueEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnDequeueEvent.md" class="wm-article-link wm-toc-text">OnDequeueEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnReceiveEvent.md" class="wm-article-link wm-toc-text">OnReceiveEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnWaitEvent.md" class="wm-article-link wm-toc-text">OnWaitEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnStateTransition.md" class="wm-article-link wm-toc-text">OnStateTransition</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnExecuteAction.md" class="wm-article-link wm-toc-text">OnExecuteAction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnGotoState.md" class="wm-article-link wm-toc-text">OnGotoState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnPushState.md" class="wm-article-link wm-toc-text">OnPushState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnPopState.md" class="wm-article-link wm-toc-text">OnPopState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnHalt.md" class="wm-article-link wm-toc-text">OnHalt</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnDefaultEventHandler.md" class="wm-article-link wm-toc-text">OnDefaultEventHandler</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnEventHandlerTerminated.md" class="wm-article-link wm-toc-text">OnEventHandlerTerminated</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnPopStateUnhandledEvent.md" class="wm-article-link wm-toc-text">OnPopStateUnhandledEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnExceptionThrown.md" class="wm-article-link wm-toc-text">OnExceptionThrown</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnExceptionHandled.md" class="wm-article-link wm-toc-text">OnExceptionHandled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnCreateTimer.md" class="wm-article-link wm-toc-text">OnCreateTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnStopTimer.md" class="wm-article-link wm-toc-text">OnStopTimer</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnCreateMonitor.md" class="wm-article-link wm-toc-text">OnCreateMonitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnMonitorExecuteAction.md" class="wm-article-link wm-toc-text">OnMonitorExecuteAction</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnMonitorProcessEvent.md" class="wm-article-link wm-toc-text">OnMonitorProcessEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnMonitorRaiseEvent.md" class="wm-article-link wm-toc-text">OnMonitorRaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnMonitorStateTransition.md" class="wm-article-link wm-toc-text">OnMonitorStateTransition</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnMonitorError.md" class="wm-article-link wm-toc-text">OnMonitorError</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnRandom.md" class="wm-article-link wm-toc-text">OnRandom</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnAssertionFailure.md" class="wm-article-link wm-toc-text">OnAssertionFailure</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnStrategyDescription.md" class="wm-article-link wm-toc-text">OnStrategyDescription</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/OnCompleted.md" class="wm-article-link wm-toc-text">OnCompleted</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/SnapshotGraph.md" class="wm-article-link wm-toc-text">SnapshotGraph</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/ActorRuntimeLogGraphBuilder.md" class="wm-article-link wm-toc-text">ActorRuntimeLogGraphBuilder</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/CollapseMachineInstances.md" class="wm-article-link wm-toc-text">CollapseMachineInstances</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/Logger.md" class="wm-article-link wm-toc-text">Logger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/ActorRuntimeLogGraphBuilder/Graph.md" class="wm-article-link wm-toc-text">Graph</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Graph</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph.md" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/GetNode.md" class="wm-article-link wm-toc-text">GetNode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/GetOrCreateNode.md" class="wm-article-link wm-toc-text">GetOrCreateNode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/GetOrCreateLink.md" class="wm-article-link wm-toc-text">GetOrCreateLink</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/ToString.md" class="wm-article-link wm-toc-text">ToString</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/WriteDgml.md" class="wm-article-link wm-toc-text">WriteDgml</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/LoadDgml.md" class="wm-article-link wm-toc-text">LoadDgml</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/Merge.md" class="wm-article-link wm-toc-text">Merge</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/Graph.md" class="wm-article-link wm-toc-text">Graph</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/Nodes.md" class="wm-article-link wm-toc-text">Nodes</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/Graph/Links.md" class="wm-article-link wm-toc-text">Links</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">GraphObject</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphObject.md" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphObject/AddAttribute.md" class="wm-article-link wm-toc-text">AddAttribute</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphObject/AddListAttribute.md" class="wm-article-link wm-toc-text">AddListAttribute</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphObject/GraphObject.md" class="wm-article-link wm-toc-text">GraphObject</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphObject/Attributes.md" class="wm-article-link wm-toc-text">Attributes</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphObject/AttributeLists.md" class="wm-article-link wm-toc-text">AttributeLists</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">GraphNode</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphNode.md" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphNode/AddDgmlProperties.md" class="wm-article-link wm-toc-text">AddDgmlProperties</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphNode/GraphNode.md" class="wm-article-link wm-toc-text">GraphNode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphNode/Id.md" class="wm-article-link wm-toc-text">Id</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphNode/Label.md" class="wm-article-link wm-toc-text">Label</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphNode/Category.md" class="wm-article-link wm-toc-text">Category</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">GraphLink</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink.md" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink/AddDgmlProperties.md" class="wm-article-link wm-toc-text">AddDgmlProperties</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink/GraphLink.md" class="wm-article-link wm-toc-text">GraphLink</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink/Label.md" class="wm-article-link wm-toc-text">Label</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink/Category.md" class="wm-article-link wm-toc-text">Category</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink/Source.md" class="wm-article-link wm-toc-text">Source</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink/Target.md" class="wm-article-link wm-toc-text">Target</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/GraphLink/Index.md" class="wm-article-link wm-toc-text">Index</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">CoverageInfo</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo.md" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/IsMachineDeclared.md" class="wm-article-link wm-toc-text">IsMachineDeclared</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/DeclareMachineState.md" class="wm-article-link wm-toc-text">DeclareMachineState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/DeclareStateEvent.md" class="wm-article-link wm-toc-text">DeclareStateEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/Merge.md" class="wm-article-link wm-toc-text">Merge</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/Load.md" class="wm-article-link wm-toc-text">Load</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/Save.md" class="wm-article-link wm-toc-text">Save</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/CoverageInfo.md" class="wm-article-link wm-toc-text">CoverageInfo</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/Machines.md" class="wm-article-link wm-toc-text">Machines</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/MachinesToStates.md" class="wm-article-link wm-toc-text">MachinesToStates</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/RegisteredEvents.md" class="wm-article-link wm-toc-text">RegisteredEvents</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/CoverageGraph.md" class="wm-article-link wm-toc-text">CoverageGraph</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Coverage/CoverageInfo/EventInfo.md" class="wm-article-link wm-toc-text">EventInfo</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Actors.SharedObjects</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Actors.SharedObjectsNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SharedCounter</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/Increment/" class="wm-article-link wm-toc-text">Increment</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/Decrement/" class="wm-article-link wm-toc-text">Decrement</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/GetValue/" class="wm-article-link wm-toc-text">GetValue</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/Add/" class="wm-article-link wm-toc-text">Add</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/Exchange/" class="wm-article-link wm-toc-text">Exchange</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedCounter/CompareExchange/" class="wm-article-link wm-toc-text">CompareExchange</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SharedDictionary</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SharedDictionary<TKey,TValue></span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/TryAdd/" class="wm-article-link wm-toc-text">TryAdd</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/TryUpdate/" class="wm-article-link wm-toc-text">TryUpdate</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/TryGetValue/" class="wm-article-link wm-toc-text">TryGetValue</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/TryRemove/" class="wm-article-link wm-toc-text">TryRemove</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/Item/" class="wm-article-link wm-toc-text">Item</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedDictionary-2/Count/" class="wm-article-link wm-toc-text">Count</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SharedRegister</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedRegister/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedRegister/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SharedRegister<T></span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedRegister-1/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedRegister-1/Update/" class="wm-article-link wm-toc-text">Update</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedRegister-1/GetValue/" class="wm-article-link wm-toc-text">GetValue</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.SharedObjects/SharedRegister-1/SetValue/" class="wm-article-link wm-toc-text">SetValue</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Actors.Timers</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Actors.TimersNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TimerElapsedEvent</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerElapsedEvent/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerElapsedEvent/TimerElapsedEvent/" class="wm-article-link wm-toc-text">TimerElapsedEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerElapsedEvent/Info/" class="wm-article-link wm-toc-text">Info</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TimerInfo</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/Equals/" class="wm-article-link wm-toc-text">Equals</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/GetHashCode/" class="wm-article-link wm-toc-text">GetHashCode</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/ToString/" class="wm-article-link wm-toc-text">ToString</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/OwnerId/" class="wm-article-link wm-toc-text">OwnerId</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/DueTime/" class="wm-article-link wm-toc-text">DueTime</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/Period/" class="wm-article-link wm-toc-text">Period</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Actors.Timers/TimerInfo/CustomEvent/" class="wm-article-link wm-toc-text">CustomEvent</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.IO</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.IONamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">ConsoleLogger</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ConsoleLogger/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ConsoleLogger/Write/" class="wm-article-link wm-toc-text">Write</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ConsoleLogger/WriteLine/" class="wm-article-link wm-toc-text">WriteLine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ConsoleLogger/ConsoleLogger/" class="wm-article-link wm-toc-text">ConsoleLogger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ConsoleLogger/TextWriter/" class="wm-article-link wm-toc-text">TextWriter</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ConsoleLogger/Encoding/" class="wm-article-link wm-toc-text">Encoding</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ConsoleLogger/LogLevel/" class="wm-article-link wm-toc-text">LogLevel</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">ILogger</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ILogger/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ILogger/Write/" class="wm-article-link wm-toc-text">Write</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ILogger/WriteLine/" class="wm-article-link wm-toc-text">WriteLine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/ILogger/TextWriter/" class="wm-article-link wm-toc-text">TextWriter</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">InMemoryLogger</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/InMemoryLogger/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/InMemoryLogger/Write/" class="wm-article-link wm-toc-text">Write</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/InMemoryLogger/WriteLine/" class="wm-article-link wm-toc-text">WriteLine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/InMemoryLogger/ToString/" class="wm-article-link wm-toc-text">ToString</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/InMemoryLogger/InMemoryLogger/" class="wm-article-link wm-toc-text">InMemoryLogger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/InMemoryLogger/TextWriter/" class="wm-article-link wm-toc-text">TextWriter</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/InMemoryLogger/Encoding/" class="wm-article-link wm-toc-text">Encoding</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.IO/LogSeverity/" class="wm-article-link wm-toc-text">LogSeverity</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TextWriterLogger</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/TextWriterLogger/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/TextWriterLogger/Write/" class="wm-article-link wm-toc-text">Write</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/TextWriterLogger/WriteLine/" class="wm-article-link wm-toc-text">WriteLine</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/TextWriterLogger/TextWriterLogger/" class="wm-article-link wm-toc-text">TextWriterLogger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/TextWriterLogger/TextWriter/" class="wm-article-link wm-toc-text">TextWriter</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.IO/TextWriterLogger/Encoding/" class="wm-article-link wm-toc-text">Encoding</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Random</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.RandomNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Generator</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Random/Generator/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Random/Generator/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Random/Generator/NextBoolean/" class="wm-article-link wm-toc-text">NextBoolean</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Random/Generator/NextInteger/" class="wm-article-link wm-toc-text">NextInteger</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Runtime</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.RuntimeNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Runtime/AssertionFailureException/" class="wm-article-link wm-toc-text">AssertionFailureException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Runtime/ExecutionCanceledException/" class="wm-article-link wm-toc-text">ExecutionCanceledException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">RuntimeException</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/RuntimeException/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/RuntimeException/RuntimeException/" class="wm-article-link wm-toc-text">RuntimeException</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">ICoyoteRuntime</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/RegisterMonitor/" class="wm-article-link wm-toc-text">RegisterMonitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/Monitor/" class="wm-article-link wm-toc-text">Monitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/RandomBoolean/" class="wm-article-link wm-toc-text">RandomBoolean</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/RandomInteger/" class="wm-article-link wm-toc-text">RandomInteger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/Assert/" class="wm-article-link wm-toc-text">Assert</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/Stop/" class="wm-article-link wm-toc-text">Stop</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/Logger/" class="wm-article-link wm-toc-text">Logger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/ICoyoteRuntime/OnFailure/" class="wm-article-link wm-toc-text">OnFailure</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.Runtime/OnFailureHandler/" class="wm-article-link wm-toc-text">OnFailureHandler</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">RuntimeFactory</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/RuntimeFactory/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/RuntimeFactory/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SchedulingPoint</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/SchedulingPoint/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/SchedulingPoint/Interleave/" class="wm-article-link wm-toc-text">Interleave</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Runtime/SchedulingPoint/Deprioritize/" class="wm-article-link wm-toc-text">Deprioritize</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Specifications</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.SpecificationsNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/RaiseEvent/" class="wm-article-link wm-toc-text">RaiseEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/RaiseGotoStateEvent/" class="wm-article-link wm-toc-text">RaiseGotoStateEvent</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/Assert/" class="wm-article-link wm-toc-text">Assert</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/ToString/" class="wm-article-link wm-toc-text">ToString</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/Monitor/" class="wm-article-link wm-toc-text">Monitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/Logger/" class="wm-article-link wm-toc-text">Logger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/CurrentState/" class="wm-article-link wm-toc-text">CurrentState</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor/HashedState/" class="wm-article-link wm-toc-text">HashedState</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Specification</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Specification/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Specification/Assert/" class="wm-article-link wm-toc-text">Assert</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Specification/IsEventuallyCompletedSuccessfully/" class="wm-article-link wm-toc-text">IsEventuallyCompletedSuccessfully</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Specification/RegisterMonitor/" class="wm-article-link wm-toc-text">RegisterMonitor</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Specification/Monitor/" class="wm-article-link wm-toc-text">Monitor</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State/State/" class="wm-article-link wm-toc-text">State</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.StateGroup</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.StateGroup/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.StateGroup/StateGroup/" class="wm-article-link wm-toc-text">StateGroup</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.StartAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.StartAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.StartAttribute/StartAttribute/" class="wm-article-link wm-toc-text">StartAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.OnEntryAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnEntryAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnEntryAttribute/OnEntryAttribute/" class="wm-article-link wm-toc-text">OnEntryAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.OnExitAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnExitAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnExitAttribute/OnExitAttribute/" class="wm-article-link wm-toc-text">OnExitAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.OnEventGotoStateAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnEventGotoStateAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnEventGotoStateAttribute/OnEventGotoStateAttribute/" class="wm-article-link wm-toc-text">OnEventGotoStateAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.OnEventDoActionAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnEventDoActionAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.OnEventDoActionAttribute/OnEventDoActionAttribute/" class="wm-article-link wm-toc-text">OnEventDoActionAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.IgnoreEventsAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.IgnoreEventsAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.IgnoreEventsAttribute/IgnoreEventsAttribute/" class="wm-article-link wm-toc-text">IgnoreEventsAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.ColdAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.ColdAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.ColdAttribute/ColdAttribute/" class="wm-article-link wm-toc-text">ColdAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Monitor.State.HotAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.HotAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Specifications/Monitor.State.HotAttribute/HotAttribute/" class="wm-article-link wm-toc-text">HotAttribute</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Tasks</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.TasksNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">AsyncLock</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock/AcquireAsync/" class="wm-article-link wm-toc-text">AcquireAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock/Release/" class="wm-article-link wm-toc-text">Release</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock/AsyncLock/" class="wm-article-link wm-toc-text">AsyncLock</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock/IsAcquired/" class="wm-article-link wm-toc-text">IsAcquired</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock/Awaiters/" class="wm-article-link wm-toc-text">Awaiters</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Semaphore</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/Wait/" class="wm-article-link wm-toc-text">Wait</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/WaitAsync/" class="wm-article-link wm-toc-text">WaitAsync</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/Release/" class="wm-article-link wm-toc-text">Release</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/Dispose/" class="wm-article-link wm-toc-text">Dispose</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/Semaphore/" class="wm-article-link wm-toc-text">Semaphore</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Semaphore/CurrentCount/" class="wm-article-link wm-toc-text">CurrentCount</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">SynchronizedBlock</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/Lock/" class="wm-article-link wm-toc-text">Lock</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/EnterLock/" class="wm-article-link wm-toc-text">EnterLock</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/Pulse/" class="wm-article-link wm-toc-text">Pulse</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/PulseAll/" class="wm-article-link wm-toc-text">PulseAll</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/Wait/" class="wm-article-link wm-toc-text">Wait</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/Dispose/" class="wm-article-link wm-toc-text">Dispose</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/SynchronizedBlock/" class="wm-article-link wm-toc-text">SynchronizedBlock</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/SynchronizedBlock/SyncObject/" class="wm-article-link wm-toc-text">SyncObject</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Task</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/FromResult/" class="wm-article-link wm-toc-text">FromResult</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/FromCanceled/" class="wm-article-link wm-toc-text">FromCanceled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/FromException/" class="wm-article-link wm-toc-text">FromException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Run/" class="wm-article-link wm-toc-text">Run</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Delay/" class="wm-article-link wm-toc-text">Delay</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/WhenAll/" class="wm-article-link wm-toc-text">WhenAll</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/WhenAny/" class="wm-article-link wm-toc-text">WhenAny</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/WaitAll/" class="wm-article-link wm-toc-text">WaitAll</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/WaitAny/" class="wm-article-link wm-toc-text">WaitAny</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Yield/" class="wm-article-link wm-toc-text">Yield</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Wait/" class="wm-article-link wm-toc-text">Wait</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/GetAwaiter/" class="wm-article-link wm-toc-text">GetAwaiter</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/ConfigureAwait/" class="wm-article-link wm-toc-text">ConfigureAwait</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/ExploreContextSwitch/" class="wm-article-link wm-toc-text">ExploreContextSwitch</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Dispose/" class="wm-article-link wm-toc-text">Dispose</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/CompletedTask/" class="wm-article-link wm-toc-text">CompletedTask</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/CurrentId/" class="wm-article-link wm-toc-text">CurrentId</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Id/" class="wm-article-link wm-toc-text">Id</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/UncontrolledTask/" class="wm-article-link wm-toc-text">UncontrolledTask</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/IsCompleted/" class="wm-article-link wm-toc-text">IsCompleted</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/IsCanceled/" class="wm-article-link wm-toc-text">IsCanceled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/IsFaulted/" class="wm-article-link wm-toc-text">IsFaulted</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Exception/" class="wm-article-link wm-toc-text">Exception</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task/Status/" class="wm-article-link wm-toc-text">Status</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">Task<TResult></span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task-1/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task-1/GetAwaiter/" class="wm-article-link wm-toc-text">GetAwaiter</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task-1/ConfigureAwait/" class="wm-article-link wm-toc-text">ConfigureAwait</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task-1/UncontrolledTask/" class="wm-article-link wm-toc-text">UncontrolledTask</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/Task-1/Result/" class="wm-article-link wm-toc-text">Result</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TaskCompletionSource</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TaskCompletionSource<TResult></span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/SetResult/" class="wm-article-link wm-toc-text">SetResult</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/TrySetResult/" class="wm-article-link wm-toc-text">TrySetResult</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/SetCanceled/" class="wm-article-link wm-toc-text">SetCanceled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/TrySetCanceled/" class="wm-article-link wm-toc-text">TrySetCanceled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/SetException/" class="wm-article-link wm-toc-text">SetException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/TrySetException/" class="wm-article-link wm-toc-text">TrySetException</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskCompletionSource-1/Task/" class="wm-article-link wm-toc-text">Task</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TaskExtensions</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskExtensions/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/TaskExtensions/WrapInControlledTask/" class="wm-article-link wm-toc-text">WrapInControlledTask</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">AsyncLock.Releaser</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock.Releaser/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Tasks/AsyncLock.Releaser/Dispose/" class="wm-article-link wm-toc-text">Dispose</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev2 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Test</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev3 "><a href="ref/Microsoft.Coyote.Test/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.Rewriting</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.RewritingNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">IsAssemblyRewrittenAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/IsAssemblyRewrittenAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/IsAssemblyRewrittenAttribute/IsAssemblyRewrittenAttribute/" class="wm-article-link wm-toc-text">IsAssemblyRewrittenAttribute</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/IsAssemblyRewrittenAttribute/Version/" class="wm-article-link wm-toc-text">Version</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">RewritingEngine</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingEngine/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingEngine/Run/" class="wm-article-link wm-toc-text">Run</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingEngine/IsAssemblyRewritten/" class="wm-article-link wm-toc-text">IsAssemblyRewritten</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">RewritingOptions</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/ParseFromJSON/" class="wm-article-link wm-toc-text">ParseFromJSON</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/RewritingOptions/" class="wm-article-link wm-toc-text">RewritingOptions</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/AssembliesDirectory/" class="wm-article-link wm-toc-text">AssembliesDirectory</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/OutputDirectory/" class="wm-article-link wm-toc-text">OutputDirectory</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/AssemblyPaths/" class="wm-article-link wm-toc-text">AssemblyPaths</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/IgnoredAssemblies/" class="wm-article-link wm-toc-text">IgnoredAssemblies</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/DependencySearchPaths/" class="wm-article-link wm-toc-text">DependencySearchPaths</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/StrongNameKeyFile/" class="wm-article-link wm-toc-text">StrongNameKeyFile</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/IsDataRaceCheckingEnabled/" class="wm-article-link wm-toc-text">IsDataRaceCheckingEnabled</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/IsRewritingDependencies/" class="wm-article-link wm-toc-text">IsRewritingDependencies</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/IsRewritingUnitTests/" class="wm-article-link wm-toc-text">IsRewritingUnitTests</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/IsRewritingThreads/" class="wm-article-link wm-toc-text">IsRewritingThreads</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/Logger/" class="wm-article-link wm-toc-text">Logger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.Rewriting/RewritingOptions/LogLevel/" class="wm-article-link wm-toc-text">LogLevel</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev3 wm-toc-opener"><span class="wm-toc-text">Microsoft.Coyote.SystematicTesting</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev4 "><a href="ref/Microsoft.Coyote.SystematicTestingNamespace/" class="wm-article-link wm-toc-text">Namespace Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TestAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestAttribute/TestAttribute/" class="wm-article-link wm-toc-text">TestAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TestInitAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestInitAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestInitAttribute/TestInitAttribute/" class="wm-article-link wm-toc-text">TestInitAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TestDisposeAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestDisposeAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestDisposeAttribute/TestDisposeAttribute/" class="wm-article-link wm-toc-text">TestDisposeAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TestIterationDisposeAttribute</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestIterationDisposeAttribute/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestIterationDisposeAttribute/TestIterationDisposeAttribute/" class="wm-article-link wm-toc-text">TestIterationDisposeAttribute</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TestingEngine</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/Create/" class="wm-article-link wm-toc-text">Create</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/Run/" class="wm-article-link wm-toc-text">Run</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/Stop/" class="wm-article-link wm-toc-text">Stop</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/GetReport/" class="wm-article-link wm-toc-text">GetReport</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/ThrowIfBugFound/" class="wm-article-link wm-toc-text">ThrowIfBugFound</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/TryEmitTraces/" class="wm-article-link wm-toc-text">TryEmitTraces</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/RegisterPerIterationCallBack/" class="wm-article-link wm-toc-text">RegisterPerIterationCallBack</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/IsTestRewritten/" class="wm-article-link wm-toc-text">IsTestRewritten</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/TestReport/" class="wm-article-link wm-toc-text">TestReport</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/Logger/" class="wm-article-link wm-toc-text">Logger</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/ReadableTrace/" class="wm-article-link wm-toc-text">ReadableTrace</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestingEngine/ReproducibleTrace/" class="wm-article-link wm-toc-text">ReproducibleTrace</a>
+</li>
+  </ul>
+</li>
+
+      <li class="wm-toc-li wm-toc-lev4 wm-toc-opener"><span class="wm-toc-text">TestReport</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/" class="wm-article-link wm-toc-text">Overview</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/Merge/" class="wm-article-link wm-toc-text">Merge</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/GetText/" class="wm-article-link wm-toc-text">GetText</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/Clone/" class="wm-article-link wm-toc-text">Clone</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/TestReport/" class="wm-article-link wm-toc-text">TestReport</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/Configuration/" class="wm-article-link wm-toc-text">Configuration</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/CoverageInfo/" class="wm-article-link wm-toc-text">CoverageInfo</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/NumOfExploredFairSchedules/" class="wm-article-link wm-toc-text">NumOfExploredFairSchedules</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/NumOfExploredUnfairSchedules/" class="wm-article-link wm-toc-text">NumOfExploredUnfairSchedules</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/NumOfFoundBugs/" class="wm-article-link wm-toc-text">NumOfFoundBugs</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/BugReports/" class="wm-article-link wm-toc-text">BugReports</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/MinExploredFairSteps/" class="wm-article-link wm-toc-text">MinExploredFairSteps</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/MaxExploredFairSteps/" class="wm-article-link wm-toc-text">MaxExploredFairSteps</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/TotalExploredFairSteps/" class="wm-article-link wm-toc-text">TotalExploredFairSteps</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/MaxFairStepsHitInFairTests/" class="wm-article-link wm-toc-text">MaxFairStepsHitInFairTests</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/MaxUnfairStepsHitInFairTests/" class="wm-article-link wm-toc-text">MaxUnfairStepsHitInFairTests</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/MaxUnfairStepsHitInUnfairTests/" class="wm-article-link wm-toc-text">MaxUnfairStepsHitInUnfairTests</a>
+</li>
+      <li class="wm-toc-li wm-toc-lev5 "><a href="ref/Microsoft.Coyote.SystematicTesting/TestReport/InternalErrors/" class="wm-article-link wm-toc-text">InternalErrors</a>
+</li>
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+  </ul>
+</li>
+
+  </ul>
+</nav>
+
+    <div class="wm-content-pane">
+      <iframe class="wm-article" name="article" aria-label="Main content"></iframe>
+    </div>
+  </div>
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="overview/benefits/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="overview/benefits/" class="btn btn-xs btn-link">
+        Key benefits
+      </a>
+    </div>
+    
+  </div>
+
+      
+
+      <h1 id="concurrency-unit-testing-with-coyote">Concurrency Unit Testing with Coyote</h1>
+<p>Coyote is .NET library and tool designed to help ensure that your code is free of concurrency bugs.</p>
+<p>Too often developers are drowning in the complexity of their own code and many hours are wasted
+trying to track down impossible-to-find bugs, especially when dealing with <em>concurrent</em> code or
+various other sources of <em>non-determinism</em> (like message ordering, failures, timeouts and so on).</p>
+<div class="embed-responsive embed-responsive-16by9">
+    <video id="shortintro" class="embed-responsive-item" controls poster="assets/images/ShortIntro.png">
+        <source  class="embed-responsive-item" src="https://github.com/microsoft/coyote-content/raw/master/assets/video/ShortIntro.mp4" type="video/mp4">
+        <!-- <source src="/assets/ShortIntro.webm" type="video/webm"> -->
+    </video>
+</div>
+
+<div id="caption" style="background:#151520; color:white; font-size: 18px; padding:5px;"></div>
+<p><br/></p>
+<script type="text/javascript">
+
+  var captions = [[0, "This animation shows messages passing through a highly parallel distributed system."],
+              [5, "Each node represents a microservice or a piece of code running on some machine."],
+              [10, "Messages are flying through this system in a way that makes it hard to debug when something goes wrong."],
+              [16, "Coyote tests one async path at a time exploring all possible paths through the system and it does this very quickly"],
+              [23, "It also records this path so that when it finds a bug that bug is 100% reproducible."]
+          ];
+
+  function show_captions(video, caption){
+    var time = video.currentTime;
+    var line = null;
+    for (var i = 0; i < captions.length; i++) {
+      var nextline = captions[i];
+      if (nextline[0] > time) break;
+      line = nextline;
+    }
+    if (line != null) {
+      caption.style.display="block";
+      caption.innerHTML = line[1]
+    } else {
+      caption.style.display="none";
+    }
+  }
+
+  $(document).ready(function () {
+      video  = $("#shortintro")[0];
+      caption = $("#caption")[0];
+      caption.style.display="none";
+      video.ontimeupdate = function() { show_captions(video, caption); };
+  });
+
+</script>
+
+<p>Coyote helps write powerful, expressive tests for your code. We call these <em>concurrency unit tests</em>.
+You can declare sources of non-determinism (such as timeouts and failures) as part of your Coyote
+tests. The Coyote testing tool can <em>systematically</em> explore a large number of interleavings of
+concurrent operations as well as non-deterministic choices so that it covers a large set of
+behaviors in a very short time. This is different from <em>stress testing</em>. Coyote takes control of the
+concurrency so that it can manipulate every possible scheduling. With appropriate <em>mocking</em>, Coyote
+can also do this in &ldquo;developer&rdquo; mode on a single laptop with little or no dependence on the bigger
+production environment.</p>
+<p>Coyote is not a verification system. It does not use theorem proving to make correctness guarantees,
+instead it uses intelligent search strategies to drive systematic testing, based on deep
+understanding of concurrency primitives that you have used in your code. This approach has proven to
+work well for large production teams, including many teams in Microsoft Azure because it has a small
+barrier to entry with almost immediate benefits for those who adopt it.</p>
+<p>Coyote does not require that a team starts from scratch and rebuilds their system. Coyote uses
+binary rewriting during test time to take control of the concurrency in your <em>unmodified</em> code. For
+advanced users, Coyote also provides a powerful in-memory actor and state machine programming model
+that allows you to build reliable concurrent systems from the ground up. This programming model
+allows you to program at a high-level of abstraction. Coyote actors are built using
+asynchronous C# APIs, supported by a lightweight runtime, making it easy to program efficient
+non-blocking code.</p>
+<p>So Coyote brings together elements of design, development and testing into an integrated package
+that works really well in the real world. See our <a href="case-studies/azure-batch-service/">case
+studies</a> for some great customer testimonials.</p>
+<h2 id="fearless-coding-for-concurrent-software">Fearless coding for concurrent software</h2>
+<p>Using Coyote gives your team much more confidence in building mission-critical services that
+also push the limits on high concurrency, maximizing throughput and minimizing operational costs.</p>
+<p>With Coyote you can create highly reliable software in a way that is also highly productive.</p>
+<p>These are some direct quotes from Azure Engineers that use Coyote:</p>
+<ul>
+<li>
+<p><em>We often found bugs with Coyote in a matter of minutes that would have taken days with stress testing.</em></p>
+</li>
+<li>
+<p><em>Coyote added agility and allowed progress at a much faster pace.</em></p>
+</li>
+<li>
+<p><em>Features were developed in a test environment to first pass the Coyote tester. When dropped in
+  production, they simply worked from the start.</em></p>
+</li>
+<li>
+<p><em>Coyote gave developers a significant confidence boost by providing full failover and
+  concurrency testing at each check-in, right on their desktops as the code was written.</em></p>
+</li>
+</ul>
+<h2 id="explore-coyote">Explore Coyote</h2>
+<p>Get started with the following links:</p>
+<p><a href="https://innovation.microsoft.com/en-us/tech-minutes-project-coyote">Watch a video overview of Coyote</a></p>
+<p><a href="overview/benefits/">Learn about the key benefits of using Coyote</a></p>
+<p><a href="get-started/install/">Install the NuGet package and CLI tool, it is super easy</a></p>
+<p><a href="tutorials/overview/">Learn how to use Coyote in practice</a></p>
+<p><a href="concepts/non-determinism/">Read about core concepts behind Coyote</a></p>
+<p><a href="https://innovation.microsoft.com/en-us/exploring-project-coyote">Try to find concurrency bugs in this interactive demo</a></p>
+<p><a href="case-studies/azure-batch-service/">Learn how various Azure teams are using Coyote</a></p>
+<p><a href="https://github.com/microsoft/coyote/">Contribute on Github</a></p>
+
+    <br>
+      
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="overview/benefits/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="overview/benefits/" class="btn btn-xs btn-link">
+        Key benefits
+      </a>
+    </div>
+    
+  </div>
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2021-06-01 21:41:53.066253+00:00
+-->

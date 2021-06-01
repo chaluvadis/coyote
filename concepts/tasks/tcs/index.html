@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <link rel="canonical" href="https://microsoft.github.io/coyote/concepts/tasks/tcs/">
+    <link rel="shortcut icon" href="/coyote/img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Tcs - Coyote</title>
+    <link href="/coyote/css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="/coyote/css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="/coyote/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/coyote/css/highlight.css">
+    <link href="../../../css/main.css" rel="stylesheet">
+    <link href="../../../css/player-controls.css" rel="stylesheet">
+    <link href="../../../css/syntax.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/coyote/js/jquery-3.2.1.min.js"></script>
+    <script src="/coyote/js/bootstrap-3.3.7.min.js"></script>
+    <script src="/coyote/js/highlight.pack.js"></script>
+    <script src="https://consentdeliveryfd.azurefd.net/mscc/lib/v2/wcp-consent.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '/coyote/';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Controlled task completion source", url: "#_top", children: [
+          ]},
+          {title: "Why is a task completion source necessary?", url: "#why-is-a-task-completion-source-necessary", children: [
+          ]},
+          {title: "How do you use it?", url: "#how-do-you-use-it", children: [
+          ]},
+          {title: "Example code", url: "#example-code", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="/coyote/js/base.js"></script>
+      <script src="../../../assets/js/analytics.js"></script>
+      <script src="../../../assets/js/plugins.js"></script>
+      <script src="../../../assets/js/animate_trace.js"></script>
+      <script src="../../../assets/js/animation.js"></script>
+      <script src="../../../assets/js/progress_bar.js"></script>
+      <script src="../../../assets/js/trace_model.js"></script>
+      <script src="../../../assets/js/main.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+<div id="cookie-banner"></div>
+
+
+<div class="wrapper wm-page-content">
+  <div class="container-fluid">
+    <a name="_top"></a>
+      
+
+      
+
+      <h2 id="controlled-task-completion-source">Controlled task completion source</h2>
+<p>The Coyote asynchronous tasks programming model provides a
+<code>Microsoft.Coyote.Tasks.TaskCompletionSource&lt;TResult&gt;</code> type that is controlled by <code>coyote test</code>
+during systematic testing to explore interleavings and find concurrency bugs. In production, this
+type is simply a thin wrapper over the native .NET
+<a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskcompletionsource-1"><code>System.Threading.Tasks.TaskCompletionSource&lt;TResult&gt;</code></a>
+type, providing the same operational semantics that you are familiar with.</p>
+<h2 id="why-is-a-task-completion-source-necessary">Why is a task completion source necessary?</h2>
+<p>In many asynchronous scenarios, it is useful to create a <code>Task&lt;TResult&gt;</code> and pass it to one or more
+consumers, which can then <code>await</code> for this task to complete to get its result. The controlled
+<code>TaskCompletionSource&lt;TResult&gt;</code> type of Coyote acts as the producer for such a <code>Task&lt;TResult&gt;</code>. The
+owner of the <code>TaskCompletionSource&lt;TResult&gt;</code> is able to control the state of the produced
+<code>Task&lt;TResult&gt;</code> and complete it by setting its result. You can learn more about the semantics of a
+task completion source in the .NET documentation of the native <a href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskcompletionsource-1"><code>TaskCompletionSource&lt;T&gt;</code>
+type</a>.</p>
+<h2 id="how-do-you-use-it">How do you use it?</h2>
+<ol>
+<li>First, create a new controlled <code>TaskCompletionSource&lt;TResult&gt;</code> using the static method
+   <code>TaskCompletionSource.Create&lt;TResult&gt;()</code>.</li>
+<li>Then, you can get the controlled <code>Task&lt;TResult&gt;</code> associated with this task completion source,
+   using the <code>TaskCompletionSource.Task</code> property, and share it with one or more consumers.</li>
+<li>Finally, you can use the <code>TaskCompletionSource</code> to complete the produced <code>Task&lt;TResult&gt;</code>. You can
+   do this using the methods of the controlled task completion source:</li>
+<li><code>SetResult()</code></li>
+<li><code>SetException()</code></li>
+<li><code>SetCanceled()</code>, or their <code>TrySet*</code> variants:</li>
+<li><code>TrySetResult()</code></li>
+<li><code>TrySetException()</code></li>
+<li><code>TrySetCanceled()</code></li>
+</ol>
+<p>Why are there two sets of methods, namely, the <code>Set*</code> methods that return <code>void</code> and their <code>TrySet*</code>
+variants that return <code>bool</code>? The reason is that the controlled <code>Task&lt;TResult&gt;</code> associated with the
+<code>TaskCompletionSource&lt;TResult&gt;</code> may only be completed once, thus attempting to set this task into a
+completed state when it&rsquo;s already in a completed state is an error, and the <code>Set*</code> methods will
+throw. However, as we&rsquo;re dealing with concurrency here, and there are some situations where races
+may be expected between multiple threads trying to resolve the completion source, the <code>TrySet*</code>
+variants return <code>bool</code> indicating success rather than throwing an exception.</p>
+<h2 id="example-code">Example code</h2>
+<p>The code below demonstrates a controlled <code>TaskCompletionSource&lt;TResult&gt;</code> in action. This represents
+the most typical scenario in which programmers need and use a task completion source, namely to know
+when a long-running operation, that itself is not awaitable, has finished.</p>
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
+
+public void StartLongOperation(TaskCompletionSource&lt;bool&gt; tcs)
+{
+    Console.WriteLine(&quot;Producer: Running a long operation...&quot;);
+    // ... do something that takes a long time.
+    // This may include calling a 3rd party library that is not awaitable.
+    Console.WriteLine(&quot;Producer: Completed the long operation.&quot;);
+    tcs.SetResult(true);
+    Console.WriteLine(&quot;Producer: Completed the task completion source.&quot;);
+}
+</code></pre>
+<p>The above <code>StartLongOperation</code> method is responsible for running some long operation. Although the
+method is not awaitable, as it returns <code>void</code>, it can signal its completion by setting the result of
+the controlled <code>TaskCompletionSource&lt;bool&gt;</code> to <code>true</code>.</p>
+<p>A consumer of the task produced by this task completion source can await on its completion using the
+following code:</p>
+<pre><code class="language-csharp">using Microsoft.Coyote.Tasks;
+
+// The input task is the task produced by the task completion source.
+public async Task Consumer(Task&lt;bool&gt; task)
+{
+    Console.WriteLine(&quot;Consumer: Waiting the long operation to complete...&quot;);
+    await task;
+    Console.WriteLine(&quot;Consumer: The long operation has completed so we can proceed with other work.&quot;);
+}
+</code></pre>
+<p>You can now use a <code>TaskCompletionSource</code> to coordinate this long running operation with another
+async <code>Task</code> that needs to wait on the completion of that operation like this:</p>
+<pre><code class="language-csharp">private async Task RunTest()
+{
+    var completion = TaskCompletionSource.Create&lt;bool&gt;();
+    this.StartLongOperation(completion);
+    await this.Consumer(completion.Task);
+
+    Console.WriteLine(&quot;Main test complete!&quot;);
+}
+</code></pre>
+<p>The output of this program will look something like this:</p>
+<pre><code class="language-plain">Producer: Running a long operation...
+Consumer: Waiting the long operation to complete...
+Producer: Completed the long operation.
+Consumer: The long operation has completed so we can proceed with other work.
+Main test complete!
+Producer: Completed the task completion source.
+</code></pre>
+<p><strong>Note</strong>: You must be careful to specify the namespace <code>Microsoft.Coyote.Tasks</code> to use the
+controlled <code>TaskCompletionSource&lt;TResult&gt;</code>, otherwise you could get the native .NET
+<code>TaskCompletionSource&lt;TResult&gt;</code> instead!</p>
+<p>You might also be puzzled by a build error if you try and do this:</p>
+<pre><code class="language-csharp">static async Task Main(string[] args)
+{
+    Program p = new Program();
+    await p.RunTest();
+}
+</code></pre>
+<p>saying:</p>
+<pre><code class="language-plain">error CS5001: Program does not contain a static 'Main' method suitable for an entry point
+</code></pre>
+<p>The reason is C# doesn&rsquo;t know about the coyote <code>Task</code>, so the fix is to fully qualify that Main entry point task like this:</p>
+<pre><code class="language-csharp">static async System.Threading.Tasks.Task Main(string[] args)
+{
+    Program p = new Program();
+    await p.RunTest();
+}
+</code></pre>
+<p>Hopefully this is the only place in your code that you will need to explicitly use a native .NET <code>Task</code>.</p>
+
+    <br>
+      
+
+      <br>
+  </div>
+</div>
+
+<footer class="wm-page-content">
+  
+
+<section class="footer-join pt-40 pb-80">
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-sm-8 col-sm-offset-2">
+      </div>
+    </div>
+    <div class="row">
+   </div>
+  </div>
+</section>
+<section class="footer-dark pt-60">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="hidden-xs col-sm-5 col-lg-6">
+        <a href="" title="homepage" class="logo-footer">
+          <img src="/coyote/assets/images/icon.png" alt="Coyote">
+        </a>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Coyote</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/">Home</a></li>
+            <li><a href="/coyote/get-started/install/">Install</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Resources</h4>
+          <ul class="list-unstyled">
+            <li><a href="/coyote/tutorials/first-concurrency-unit-test/">Getting started</a></li>
+            <li><a href="/coyote/tutorials/overview/">Tutorials</a></li>
+            <li><a href="/coyote/ref/Microsoft.Coyote">API documentation</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="col-sm-2 col-xs-4 footer-dark-col">
+        <nav>
+          <h4>Community</h4>
+          <ul class="list-unstyled">
+            <li><a href="https://github.com/microsoft/coyote/"><i class="fa fa-github"></i>
+GitHub</a></li>
+            <li><a href="https://twitter.com/coyote_dev" target="_blank"><i class="fa fa-twitter"></i> Twitter</a></li>
+            <li><a href="https://gitter.im/microsoft/coyote" target="_blank">Gitter</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <div class="row footnote pt-50 pb-20">
+      <div class="col-sm-12">
+        <hr>
+      </div>
+      <div class="col-sm-6">
+        <ul class="list-unstyled list-inline footnote-copy">
+          <li><a href="https://privacy.microsoft.com/en-us/privacystatement/" target="_blank">Privacy</a></li>
+          <li><a href="https://www.microsoft.com/en-us/legal/intellectualproperty/copyright/default.aspx" target="_blank">Terms of Use</a></li>
+          <li><a href="https://github.com/microsoft/coyote/blob/main/LICENSE" target="_blank">License</a></li>
+          <li><a href="javascript:manageCookies()">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 text-right footnote-copy">
+        <ul class="list-unstyled list-inline">
+          <li><span id="copyright"></span></li>
+          <li><a href="https://www.microsoft.com/" target="_blank"><img class="img-responsive" src="/coyote/assets/images/microsoft-logo.svg?v=3" alt="Microsoft">&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</footer>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      $('table').each(function () {
+        $(this).addClass("table");
+        $(this).addClass("table-bordered");
+        $(this).addClass("table-striped");
+        $(this).addClass("table-condensed");
+      });
+
+    });
+</script>
+
+</body>
+</html>
